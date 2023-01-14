@@ -23,7 +23,7 @@ yarn add web3-covalent-sdk
 
 ## Usecase addressed
 
-A unified JavaScript SDK written in TypeScript that can be used in a Reactjs web application (in the Model Layer, taking into account that React applications follow th MVVM pattern) to access the Covalent Unified API as all-in-one library for Frontend projects.
+A unified JavaScript SDK written in TypeScript that can be used in a Reactjs web application (in the Model Layer, taking into account that React applications follow the MVVM pattern) to access the Covalent Unified API as all-in-one library for Frontend projects.
 
 ## Pitch Deck
 
