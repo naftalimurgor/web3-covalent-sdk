@@ -2,7 +2,32 @@
 
 A full-fledged sdk for the Covalent Unified API
 
-## API endpoints used
+## Quick Start
+
+### Installation
+If using npm:
+```sh
+npm i web3-covalent-sdk
+```
+
+or with Yarn:
+```sh
+yarn add web3-covalent-sdk
+```
+
+## Usecase addressed
+
+A unified JavaScript that can be used in Reactjs library to access the Covalent Unified API as all-in-one library for Frontend projects.
+
+## Pitch Deck
+
+[View Pitch Deck](https://www.canva.com/design/DAFXW9uylME/o4EpvuYo8YAALjvrDuSRZg/view?utm_content=DAFXW9uylME&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
+
+## Try out in Code Sandbox
+
+[Code Sandbox]()
+
+## Covalent API endpoints used
 
 1. Covalent Balances used endpoints:
 
@@ -45,17 +70,6 @@ A full-fledged sdk for the Covalent Unified API
 2. v1/{{chain_id}}/tokens/{{ppg_contract_address}}/nft_transactions/{{token_id}}/   - Get NFT Transactions for contract
 3. v1/{{chain_id}}/tokens/{{ppg_contract_address}}/nft_metadata/{{token_id}}/       - Get NFT external metadata for contract
 
-## Pitch Deck
-
-[View Pitch Deck](https://www.canva.com/design/DAFXW9uylME/o4EpvuYo8YAALjvrDuSRZg/view?utm_content=DAFXW9uylME&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
-
-## Try out in Code Sandbox
-
-[Code Sandbox]()
-
-## Quick Start
-
-### Installation
 
 ### 1. Query NFT data
 
