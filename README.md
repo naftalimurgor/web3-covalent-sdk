@@ -1,3 +1,7 @@
+<p align="center">
+  <img width="250" height="250" src="https://github.com/naftalimurgor/web3-covalent-sdk/blob/main/web3-covalent-sdk.png">
+</p>
+
 # web3-covalent-sdk
 
 A full-fledged sdk for the Covalent Unified API
