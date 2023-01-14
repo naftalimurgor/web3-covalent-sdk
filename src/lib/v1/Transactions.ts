@@ -71,7 +71,7 @@ export class Transactions implements ITransactions {
   };
 
   /**
-   * transaction data with their decoded event logs based on txHashs
+   * Fetch transaction data with their decoded event logs based on txHashs
    * @date 1/13/2023 - 6:30:02 PM
    *
    * @async
