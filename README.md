@@ -4,7 +4,9 @@
 
 # web3-covalent-sdk
 
-A full-fledged sdk for the Covalent Unified API
+A full-fledged sdk for the Covalent Unified API for querying on-chain data across mutliple chains. 
+
+Check out [Covalent API](https://www.covalenthq.com/platform/#/) for more info.
 
 ## Quick Start
 
@@ -21,19 +23,36 @@ yarn add web3-covalent-sdk
 
 ## Usecase addressed
 
-A unified JavaScript that can be used in Reactjs library to access the Covalent Unified API as all-in-one library for Frontend projects.
+A unified JavaScript SDK written in TypeScript that can be used in a Reactjs web application (in the Model Layer, taking into account that React applications follow th MVVM pattern) to access the Covalent Unified API as all-in-one library for Frontend projects.
 
 ## Pitch Deck
 
 [View Pitch Deck](https://www.canva.com/design/DAFXW9uylME/o4EpvuYo8YAALjvrDuSRZg/view?utm_content=DAFXW9uylME&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
 
+
+## Usage
+
+### 1. Query NFT data
+
+### 2. Query Transactions
+
+### 3. Query Block Data
+
+### 4. Query xy=k Data
+
+### 5. Query Balances
+
+## Docs
+
+Read more 
+
 ## Try out in Code Sandbox
 
 [Code Sandbox]()
 
-## Covalent API endpoints used
+## Covalent API endpoints used (V1)
 
-1. Covalent Balances used endpoints:
+1. Balances endpoint
 
 1. v1/{{chain_id}}/address/{{wallet_address}}/balances_v2/        -Get Token Balances for Address
 2. v1/{{chain_id}}/address/{{wallet_address}}/portfolio_v2/       -Get Historic Portfolio value over time
@@ -54,7 +73,7 @@ A unified JavaScript that can be used in Reactjs library to access the Covalent 
 5. /v1/chains/ -Get all chains
 6. /v1/chains/status/ -Get all chain statuses
 
-## xy(DEXEs)
+## xy=k(DEXEs)
 
 1. /v1/{{chain_id}}/xy=k/{{dexname}}/pools/ - Get xy=k pools
 2. v1/{{chain_id}}/xy=k/{{dexname}}/pools/address/{{usdc_pool_address}}/ -Get xy=k pools by address
@@ -74,15 +93,3 @@ A unified JavaScript that can be used in Reactjs library to access the Covalent 
 2. v1/{{chain_id}}/tokens/{{ppg_contract_address}}/nft_transactions/{{token_id}}/   - Get NFT Transactions for contract
 3. v1/{{chain_id}}/tokens/{{ppg_contract_address}}/nft_metadata/{{token_id}}/       - Get NFT external metadata for contract
 
-
-### 1. Query NFT data
-
-### 2. Query Transactions
-
-### 3. Query Block Data
-
-### 4. Query xy=k Data
-
-### 5. Query Balances
-
-## Docs
