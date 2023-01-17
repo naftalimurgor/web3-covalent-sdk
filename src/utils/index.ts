@@ -1,4 +1,4 @@
-import axios, { AxiosHeaders } from "axios";
+import axios, { AxiosHeaders } from 'axios'
 
 export async function get(url: string, headers?: AxiosHeaders) {
     try {

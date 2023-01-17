@@ -1,1 +1,1 @@
-declare module 'jest-extended';
+declare module 'jest-extended'

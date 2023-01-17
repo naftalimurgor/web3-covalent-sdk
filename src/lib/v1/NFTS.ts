@@ -1,6 +1,6 @@
-import { ErrorResponse, SDKConfig } from '../../types';
-import { get } from '../../utils';
-import { INFTs, NFTTokenIds } from './INFTS';
+import { ErrorResponse, SDKConfig } from '../../types'
+import { get } from '../../utils'
+import { INFTs, NFTTokenIds } from './INFTS'
 
 /**
  * NFTs Class
@@ -12,116 +12,116 @@ import { INFTs, NFTTokenIds } from './INFTS';
  * @implements {INFTs}
  */
 export class NFTs implements INFTs {
-  /**
-   * Covalent API HTTPURL
-   * @date 1/14/2023 - 10:57:39 AM
-   *
-   * @private
-   * @type {!string}
-   */
-  private API_URL!: string;
+    /**
+     * Covalent API HTTPURL
+     * @date 1/14/2023 - 10:57:39 AM
+     *
+     * @private
+     * @type {!string}
+     */
+    private API_URL!: string
 
-  /**
-   * API key for authenticating requests to the Covalent API passed as a param: &key=api_key
-   * @date 1/14/2023 - 10:57:39 AM
-   *
-   * @private
-   * @type {!string}
-   */
-  private API_KEY!: string;
+    /**
+     * API key for authenticating requests to the Covalent API passed as a param: &key=api_key
+     * @date 1/14/2023 - 10:57:39 AM
+     *
+     * @private
+     * @type {!string}
+     */
+    private API_KEY!: string
 
-  /**
-   * Creates an instance of NFTs.
-   * @date 1/14/2023 - 10:57:39 AM
-   *
-   * @constructor
-   * @param {SDKConfig} config
-   */
-  constructor(config: SDKConfig) {
-    this.API_KEY = config.apiKey;
-    this.API_URL = config.apiV1Url;
-  }
-
-  /**
-   * Fetch TokenIDs for NFT contract
-   * @date 1/14/2023 - 10:57:39 AM
-   *
-   * @async
-   * @param {string} chainId
-   * @param {string} contractAddress
-   * @param {?(number | undefined)} [pageSize]
-   * @param {?(number | undefined)} [_pageNumber]
-   * @returns {(Promise<NFTTokenIds | ErrorResponse>)}
-   */
-  public getNFTTokenIDsForContract = async (
-    chainId: string,
-    contractAddress: string,
-    pageSize?: number | undefined,
-    _pageNumber?: number | undefined
-  ): Promise<NFTTokenIds | ErrorResponse> => {
-    const url = `${this.API_URL}${chainId}/tokens/${contractAddress}}/nft_metadata/{{token_id}}/&page_size=${pageSize}&key=${this.API_KEY}`;
-    try {
-      const result = await get(url);
-      return result as NFTTokenIds;
-    } catch (error) {
-      console.error(`Failed to getNFTTokenIDsForContrac e: `, error);
-      return error as ErrorResponse;
+    /**
+     * Creates an instance of NFTs.
+     * @date 1/14/2023 - 10:57:39 AM
+     *
+     * @constructor
+     * @param {SDKConfig} config
+     */
+    constructor(config: SDKConfig) {
+        this.API_KEY = config.apiKey
+        this.API_URL = config.apiV1Url
     }
-  };
 
-  /**
-   * Fetch Transactions for NFT contract
-   * @date 1/14/2023 - 10:57:39 AM
-   *
-   * @async
-   * @param {string} chainId
-   * @param {number} tokenId
-   * @param {string} contractAddress
-   * @param {?(number | undefined)} [pageSize]
-   * @param {?(number | undefined)} [_pageNumber]
-   * @returns {Promise<any>}
-   */
-  public getNFTTransactionsForContract = async (
-    chainId: string,
-    tokenId: number,
-    contractAddress: string,
-    pageSize?: number | undefined,
-    _pageNumber?: number | undefined
-  ): Promise<any> => {
-    const url = `${this.API_URL}${chainId}/tokens/${contractAddress}/nft_transactions/${tokenId}/&page_size=${pageSize}&key=${this.API_KEY}`;
-    try {
-      const result = await get(url);
-      return result;
-    } catch (error) {
-      console.error(`Failed to getNFTTokenIDsForContrac e: `, error);
-      return error;
+    /**
+     * Fetch TokenIDs for NFT contract
+     * @date 1/14/2023 - 10:57:39 AM
+     *
+     * @async
+     * @param {string} chainId
+     * @param {string} contractAddress
+     * @param {?(number | undefined)} [pageSize]
+     * @param {?(number | undefined)} [_pageNumber]
+     * @returns {(Promise<NFTTokenIds | ErrorResponse>)}
+     */
+    public getNFTTokenIDsForContract = async (
+        chainId: string,
+        contractAddress: string,
+        pageSize?: number | undefined,
+        _pageNumber?: number | undefined,
+    ): Promise<NFTTokenIds | ErrorResponse> => {
+        const url = `${this.API_URL}${chainId}/tokens/${contractAddress}}/nft_metadata/{{token_id}}/&page_size=${pageSize}&key=${this.API_KEY}`
+        try {
+            const result = await get(url)
+            return result as NFTTokenIds
+        } catch (error) {
+            console.error(`Failed to getNFTTokenIDsForContrac e: `, error)
+            return error as ErrorResponse
+        }
     }
-  };
 
-  /**
-   * Fetch external NFT Contract Metadata
-   * @date 1/14/2023 - 10:57:39 AM
-   *
-   * @async
-   * @param {string} chainId
-   * @param {string} contractAddress
-   * @param {number} tokenId
-   * @param {?number} [pageSize]
-   * @returns {Promise<any>}
-   */
-  public getExternalNFTContractMetadata = async (
-    chainId: string,
-    contractAddress: string,
-    tokenId: number,
-    pageSize?: number
-  ): Promise<any> => {
-    const url = `${this.API_URL}${chainId}/tokens/${contractAddress}/nft_metadata/${tokenId}/&page_size=${pageSize}&key=${this.API_KEY}`;
-    try {
-      const result = await get(url);
-      return result;
-    } catch (error) {
-      console.error(`Failed to getExternalNFTContractMetadata e: `, error);
-      return error;
+    /**
+     * Fetch Transactions for NFT contract
+     * @date 1/14/2023 - 10:57:39 AM
+     *
+     * @async
+     * @param {string} chainId
+     * @param {number} tokenId
+     * @param {string} contractAddress
+     * @param {?(number | undefined)} [pageSize]
+     * @param {?(number | undefined)} [_pageNumber]
+     * @returns {Promise<any>}
+     */
+    public getNFTTransactionsForContract = async (
+        chainId: string,
+        tokenId: number,
+        contractAddress: string,
+        pageSize?: number | undefined,
+        _pageNumber?: number | undefined,
+    ): Promise<any> => {
+        const url = `${this.API_URL}${chainId}/tokens/${contractAddress}/nft_transactions/${tokenId}/&page_size=${pageSize}&key=${this.API_KEY}`
+        try {
+            const result = await get(url)
+            return result
+        } catch (error) {
+            console.error(`Failed to getNFTTokenIDsForContrac e: `, error)
+            return error
+        }
     }
-  };
+
+    /**
+     * Fetch external NFT Contract Metadata
+     * @date 1/14/2023 - 10:57:39 AM
+     *
+     * @async
+     * @param {string} chainId
+     * @param {string} contractAddress
+     * @param {number} tokenId
+     * @param {?number} [pageSize]
+     * @returns {Promise<any>}
+     */
+    public getExternalNFTContractMetadata = async (
+        chainId: string,
+        contractAddress: string,
+        tokenId: number,
+        pageSize?: number,
+    ): Promise<any> => {
+        const url = `${this.API_URL}${chainId}/tokens/${contractAddress}/nft_metadata/${tokenId}/&page_size=${pageSize}&key=${this.API_KEY}`
+        try {
+            const result = await get(url)
+            return result
+        } catch (error) {
+            console.error(`Failed to getExternalNFTContractMetadata e: `, error)
+            return error
+        }
+    }
 }
