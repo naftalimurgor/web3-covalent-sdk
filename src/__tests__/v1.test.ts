@@ -16,11 +16,11 @@ import { NFTs } from '../lib/v1/NFTS'
 import { Transactions } from '../lib/v1/Transactions'
 import { SDKConfig } from '../types'
 import * as dotenv from 'dotenv'
-import { BalanceResponse } from '../lib/v1/IBalances.interface'
+import { Balance, Portfolio, TokenHolders } from '../lib/v1/IBalances.interface'
 
 dotenv.config()
 
-describe('V1 tests', () => {
+describe('V1 its', () => {
     const sdKConfig: SDKConfig = {
         // obtain key from: https://www.covalenthq.com/platform/#/
         apiKey: process.env.COVALENT_API_KEY as string,
@@ -28,33 +28,60 @@ describe('V1 tests', () => {
     }
 
     const ETHEREUM_CHAIN_ID = 1
-    const TEST_ADDRESS = '0x03C0C9636400E8Bb9644A90b49A5eb00d4140562'
+    const TEST_ADDRESS = '0xDaF81c3603C83f952376F5829a360A5822f5B5Da'
     let web3CovalentSDK: Web3CovalentSDK
 
     beforeAll(() => {
         web3CovalentSDK = new Web3CovalentSDK(sdKConfig)
     })
 
-    test('Should correctly create Instance of Web3CovalentSDK', () => {
-        const _web3CovalentSDK = new Web3CovalentSDK(sdKConfig)
-        expect(_web3CovalentSDK).toBeInstanceOf(Web3CovalentSDK)
-        expect(_web3CovalentSDK.balances).toBeInstanceOf(Balances)
-        expect(_web3CovalentSDK.transactions).toBeInstanceOf(Transactions)
-        expect(_web3CovalentSDK.nfts).toBeInstanceOf(NFTs)
-        expect(_web3CovalentSDK.base).toBeInstanceOf(Base)
-        expect(_web3CovalentSDK.dexes).toBeInstanceOf(DEX)
+    describe('Web3CovalentSDK Instance', () => {
+        it('Should correctly create Instance of Web3CovalentSDK', () => {
+            const _web3CovalentSDK = new Web3CovalentSDK(sdKConfig)
+            expect(_web3CovalentSDK).toBeInstanceOf(Web3CovalentSDK)
+            expect(_web3CovalentSDK.balances).toBeInstanceOf(Balances)
+            expect(_web3CovalentSDK.transactions).toBeInstanceOf(Transactions)
+            expect(_web3CovalentSDK.nfts).toBeInstanceOf(NFTs)
+            expect(_web3CovalentSDK.base).toBeInstanceOf(Base)
+            expect(_web3CovalentSDK.dexes).toBeInstanceOf(DEX)
+        })
     })
 
-    test('should fetch balance of an address given chainId, and an address', async () => {
-        try {
-            const result = await web3CovalentSDK.balances.getAddressBalance(
+    describe('Balances', () => {
+        it('should fetch balance of an address given chainId, and an address', async () => {
+            const result = (await web3CovalentSDK.balances.getAddressBalance(
                 ETHEREUM_CHAIN_ID,
                 TEST_ADDRESS,
-            )
-            console.info(result)
-            expect(result.chain_id).toEqual(ETHEREUM_CHAIN_ID)
-        } catch (error) {
-            console.error(error)
-        }
+            )) as Balance
+
+            expect(result?.chain_id).toEqual(ETHEREUM_CHAIN_ID)
+            expect(result?.address).toEqual(TEST_ADDRESS.toLowerCase())
+            expect(result.items).toBeArray()
+        })
+
+        it('should fetch balance of an address given chainId, and an address', async () => {
+            const result = (await web3CovalentSDK.balances.getHistoricPortfolioValueOverTime(
+                ETHEREUM_CHAIN_ID,
+                TEST_ADDRESS,
+            )) as Portfolio
+
+            expect(result?.chain_id).toEqual(ETHEREUM_CHAIN_ID)
+            expect(result?.address).toEqual(TEST_ADDRESS)
+            expect(result.items).toBeArray()
+        })
+
+        it('should fetch tokenHolders at a given Height', async () => {
+            const blockHeight = Object.freeze({ startingBlock: 15410833, endingBlock: 'latest' })
+
+            const result = (await web3CovalentSDK.balances.geTokenHoldersAtBlockHeight(
+                ETHEREUM_CHAIN_ID,
+                '0xBd3531dA5CF5857e7CfAA92426877b022e612cf8',
+                blockHeight,
+            )) as TokenHolders
+
+            expect(result?.chain_id).toEqual(ETHEREUM_CHAIN_ID)
+            expect(result?.address).toEqual(TEST_ADDRESS)
+            expect(result.items).toBeArray()
+        })
     })
 })
