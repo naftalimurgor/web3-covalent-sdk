@@ -2,12 +2,13 @@ import { SDKConfig } from '../../types'
 import { get } from '../../utils'
 
 import {
-    BalanceResponse,
+    Balance,
+    BlockHeight,
     ERC20TokenTransfers,
     ErrorResponse,
     IBalances,
-    PortfolioResponse,
-    TokenHoldersResponse,
+    Portfolio,
+    TokenHolders,
 } from './IBalances.interface'
 
 /**
@@ -30,7 +31,7 @@ export class Balances implements IBalances {
     private readonly API_URL!: string
 
     /**
-     * V1 Covalent API url
+     * V1 Covalent API key
      * @date 1/13/2023 - 2:39:51 PM
      *
      * @private
@@ -55,17 +56,18 @@ export class Balances implements IBalances {
      * @async
      * @param {number} chainId chainId of the network to query
      * @param {string} address
-     * @returns {(Promise<ErrorResponse | BalanceResponse>)}
+     * @returns {(Promise<ErrorResponse | Balance>)}
      */
     public readonly getAddressBalance = async (
         chainId: number,
         address: string,
-    ): Promise<ErrorResponse | BalanceResponse> => {
-        const url = `${this.API_URL}${chainId}/address/${address}/?key=${this.API_KEY}`
+    ): Promise<ErrorResponse | Balance> => {
+        const url = `${this.API_URL}${chainId}/address/${address}/balances_v2/?key=${this.API_KEY}`
 
         try {
             const result = await get(url)
-            return result as BalanceResponse
+            if (result.data) return result.data as Balance
+            else throw new Error(result.message)
         } catch (error) {
             console.error(`Failed to getAddressBalance ${error}`)
             return error as ErrorResponse
@@ -80,18 +82,19 @@ export class Balances implements IBalances {
      * @async
      * @param {number} chainId chainId of the network
      * @param {string} address of the account(can be E.O.A) or contract address
-     * @returns {(Promise<ErrorResponse | PortfolioResponse>)}
+     * @returns {(Promise<ErrorResponse | Portfolio>)}
      */
     public readonly getHistoricPortfolioValueOverTime = async (
         chainId: number,
         address: string,
-    ): Promise<ErrorResponse | PortfolioResponse> => {
+    ): Promise<ErrorResponse | Portfolio> => {
         const url = `${this.API_URL}${chainId}/address/${address}/?key=${this.API_KEY}`
         try {
             const result = await get(url)
-            return result as PortfolioResponse
+            if (result.data) return result.data as Portfolio
+            else throw new Error(result.message)
         } catch (error) {
-            console.error(`Failed to getAddressBalance ${error}`)
+            console.error(`Failed to geTokenHoldersAtBlockHeight ${error}`)
             return error as ErrorResponse
         }
     }
@@ -105,21 +108,22 @@ export class Balances implements IBalances {
      * @param {number} chainId hainId of the network
      * @param {string} contractAddress Address of the token contract
      * @param {{ startBlock: number; endingBlock: number }} blockHeight
-     * @returns {(Promise<ErrorResponse | TokenHoldersResponse>)}
+     * @returns {(Promise<ErrorResponse | TokenHolders>)}
      */
     public readonly geTokenHoldersAtBlockHeight = async (
         chainId: number,
         contractAddress: string,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        _blockHeight: { readonly startBlock: number; readonly endingBlock: number },
-    ): Promise<ErrorResponse | TokenHoldersResponse> => {
+        _blockHeight: BlockHeight,
+    ): Promise<ErrorResponse | TokenHolders> => {
         const url = `${this.API_URL}${chainId}/tokens/${contractAddress}/token_holders/?key=${this.API_KEY}`
 
         try {
             const result = await get(url)
-            return result as TokenHoldersResponse
+            if (result.data) return result.data as TokenHolders
+            else throw new Error(result.message)
         } catch (error) {
-            console.error(`Failed to getAddressBalance ${error}`)
+            console.error(`Failed to geTokenHoldersAtBlockHeight  ${error}`)
             return error as ErrorResponse
         }
     }
@@ -144,9 +148,10 @@ export class Balances implements IBalances {
 
         try {
             const result = await get(url)
-            return result as ERC20TokenTransfers
+            if (result.data) return result.data as ErrorResponse
+            else throw new Error(result.message)
         } catch (error) {
-            console.error(`Failed to getAddressBalance ${error}`)
+            console.error(`Failed to getERC20TokenTransfers ${error}`)
             return error as ErrorResponse
         }
     }
@@ -160,20 +165,21 @@ export class Balances implements IBalances {
      * @param {number} chainId
      * @param {string} contractAddress
      * @param {{ startBlock: number; endingBlock: number }} blockHeight
-     * @returns {(Promise<TokenHoldersResponse | ErrorResponse>)}
+     * @returns {(Promise<TokenHolders | ErrorResponse>)}
      */
-    public readonly getChangesInTokenHoldersBetweenTwoblockHeights = async (
+    public readonly getChangesInTokenHoldersBetweenTwoBlocHeights = async (
         chainId: number,
         contractAddress: string,
-        blockHeight: { readonly startBlock: number; readonly endingBlock: number },
-    ): Promise<TokenHoldersResponse | ErrorResponse> => {
+        blockHeight: BlockHeight,
+    ): Promise<TokenHolders | ErrorResponse> => {
         const url = `${this.API_URL}${chainId}/${chainId}}/tokens/${contractAddress}/token_holders_changes/?starting-block=${blockHeight.startBlock}&ending-block=${blockHeight.endingBlock}`
 
         try {
             const result = await get(url)
-            return result as TokenHoldersResponse
+            if (result.data) return result.data as TokenHolders
+            else throw new Error(result.message)
         } catch (error) {
-            console.error(`Failed to getAddressBalance ${error}`)
+            console.error(`Failed to getChangesInTokenHoldersBetweenTwoBlocHeights  ${error}`)
             return error as ErrorResponse
         }
     }

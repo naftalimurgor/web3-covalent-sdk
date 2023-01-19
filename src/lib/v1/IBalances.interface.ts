@@ -12,13 +12,14 @@ type ERROR_CODE =
     | ERR_TOO_MANY_REQUESTS
     | SERVER_ERRORS
 
-export type ErrorResponse = {
-    data: string // @todo update this type incrementally, should be null if there is an error?
-    error: boolean
-    error_code: ERROR_CODE
-}
+export type ErrorResponse =
+    | {
+          error: boolean
+          error_code: ERROR_CODE
+      }
+    | Error
 
-export interface BalanceResponse {
+export interface Balance {
     address: string
     updated_at: string
     next_update_at: string
@@ -47,7 +48,7 @@ interface Item {
     nft_data?: any
 }
 
-export interface PortfolioResponse {
+export interface Portfolio {
     address: string
     update_at: number
     next_update_at: number
@@ -155,36 +156,38 @@ interface ERC20Transfer {
     logo_url: string
     transfer_type: string
     delta: string
-    balance?: any
+    balance?: string
     quote_rate: number
     delta_quote: number
-    balance_quote?: any
-    method_calls?: any
+    balance_quote?: string
+    method_calls?: string
 }
 
-export interface TokenHoldersResponse {}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface TokenHolders {
+    address: string
+    items: Array<any>
+    chain_id: number
+}
 
-type BlockHeight = {
-    startBlock: number
-    endingBlock: number
+export type BlockHeight = {
+    startingBlock: number
+    endingBlock: number | 'latest'
 }
 
 export interface IBalances {
-    getAddressBalance: (
-        chainId: number,
-        address: string,
-    ) => Promise<BalanceResponse | ErrorResponse>
+    getAddressBalance: (chainId: number, address: string) => Promise<Balance | ErrorResponse>
 
     getHistoricPortfolioValueOverTime: (
         chainId: number,
         address: string,
-    ) => Promise<ErrorResponse | PortfolioResponse>
+    ) => Promise<ErrorResponse | Portfolio>
 
     geTokenHoldersAtBlockHeight: (
         chainId: number,
         address: string,
         blockHeight: BlockHeight,
-    ) => Promise<ErrorResponse | TokenHoldersResponse>
+    ) => Promise<ErrorResponse | TokenHolders>
 
     getERC20TokenTransfers: (
         chainId: number,
@@ -192,9 +195,9 @@ export interface IBalances {
         walletAddress: string,
     ) => Promise<ErrorResponse | ERC20TokenTransfers>
 
-    getChangesInTokenHoldersBetweenTwoblockHeights: (
+    getChangesInTokenHoldersBetweenTwoBlocHeights: (
         chainId: number,
         contractAddress: string,
         blockHeight: BlockHeight,
-    ) => Promise<ErrorResponse | TokenHoldersResponse>
+    ) => Promise<ErrorResponse | TokenHolders>
 }
