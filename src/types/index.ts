@@ -17,8 +17,10 @@ export type ERROR_CODE =
     | ERR_TOO_MANY_REQUESTS
     | SERVER_ERRORS
 
-export type ErrorResponse = {
-    data: string // @todo update this type incrementally, should be null if there is an error?
-    error: boolean
-    error_code: ERROR_CODE
-}
+export type ErrorResponse =
+    | {
+          data: string // @todo update this type incrementally, should be null if there is an error?
+          error: boolean
+          error_code: ERROR_CODE
+      }
+    | Error
