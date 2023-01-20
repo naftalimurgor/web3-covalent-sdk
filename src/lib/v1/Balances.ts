@@ -88,13 +88,13 @@ export class Balances implements IBalances {
         chainId: number,
         address: string,
     ): Promise<ErrorResponse | Portfolio> => {
-        const url = `${this.API_URL}${chainId}/address/${address}/?key=${this.API_KEY}`
+        const url = `${this.API_URL}${chainId}/address/${address}/portfolio_v2/?key=${this.API_KEY}`
         try {
             const result = await get(url)
             if (result.data) return result.data as Portfolio
             else throw new Error(result.message)
         } catch (error) {
-            console.error(`Failed to geTokenHoldersAtBlockHeight ${error}`)
+            console.error(`Failed to getHistoricPortfolioValueOverTime ${error}`)
             return error as ErrorResponse
         }
     }
@@ -110,13 +110,14 @@ export class Balances implements IBalances {
      * @param {{ startBlock: number; endingBlock: number }} blockHeight
      * @returns {(Promise<ErrorResponse | TokenHolders>)}
      */
-    public readonly geTokenHoldersAtBlockHeight = async (
+    public readonly getTokenHoldersAtBlockHeight = async (
         chainId: number,
         contractAddress: string,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         _blockHeight: BlockHeight,
+        pageSize = 100,
     ): Promise<ErrorResponse | TokenHolders> => {
-        const url = `${this.API_URL}${chainId}/tokens/${contractAddress}/token_holders/?key=${this.API_KEY}`
+        const url = `${this.API_URL}${chainId}/tokens/${contractAddress}/token_holders/?&page_size=${pageSize}&key=${this.API_KEY}`
 
         try {
             const result = await get(url)
@@ -144,11 +145,11 @@ export class Balances implements IBalances {
         contractAddress: string,
         walletAddress: string,
     ): Promise<ErrorResponse | ERC20TokenTransfers> => {
-        const url = `${this.API_URL}${chainId}}/address/${walletAddress}/transfers_v2/?contract-address=${contractAddress}?key=${this.API_KEY}`
+        const url = `${this.API_URL}${chainId}}/address/${walletAddress}/transfers_v2/?contract-address=${contractAddress}&key=${this.API_KEY}`
 
         try {
             const result = await get(url)
-            if (result.data) return result.data as ErrorResponse
+            if (result.data) return result.data as ERC20TokenTransfers
             else throw new Error(result.message)
         } catch (error) {
             console.error(`Failed to getERC20TokenTransfers ${error}`)
@@ -172,7 +173,7 @@ export class Balances implements IBalances {
         contractAddress: string,
         blockHeight: BlockHeight,
     ): Promise<TokenHolders | ErrorResponse> => {
-        const url = `${this.API_URL}${chainId}/${chainId}}/tokens/${contractAddress}/token_holders_changes/?starting-block=${blockHeight.startBlock}&ending-block=${blockHeight.endingBlock}`
+        const url = `${this.API_URL}${chainId}/${chainId}}/tokens/${contractAddress}/token_holders_changes/?starting-block=${blockHeight.startingBlock}&ending-block=${blockHeight.endingBlock}&key=${this.API_KEY}`
 
         try {
             const result = await get(url)
