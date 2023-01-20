@@ -57,31 +57,59 @@ describe('V1 its', () => {
             expect(result?.chain_id).toEqual(ETHEREUM_CHAIN_ID)
             expect(result?.address).toEqual(TEST_ADDRESS.toLowerCase())
             expect(result.items).toBeArray()
-        })
+        }, 10000)
 
-        it('should fetch balance of an address given chainId, and an address', async () => {
+        it('should fetch historical portfolio value over time', async () => {
             const result = (await web3CovalentSDK.balances.getHistoricPortfolioValueOverTime(
                 ETHEREUM_CHAIN_ID,
                 TEST_ADDRESS,
             )) as Portfolio
 
             expect(result?.chain_id).toEqual(ETHEREUM_CHAIN_ID)
-            expect(result?.address).toEqual(TEST_ADDRESS)
+            expect(result?.address).toEqual(TEST_ADDRESS.toLowerCase())
             expect(result.items).toBeArray()
-        })
+        }, 10000)
 
         it('should fetch tokenHolders at a given Height', async () => {
             const blockHeight = Object.freeze({ startingBlock: 15410833, endingBlock: 'latest' })
 
-            const result = (await web3CovalentSDK.balances.geTokenHoldersAtBlockHeight(
+            const result = (await web3CovalentSDK.balances.getTokenHoldersAtBlockHeight(
                 ETHEREUM_CHAIN_ID,
                 '0xBd3531dA5CF5857e7CfAA92426877b022e612cf8',
                 blockHeight,
+                10,
             )) as TokenHolders
-
-            expect(result?.chain_id).toEqual(ETHEREUM_CHAIN_ID)
-            expect(result?.address).toEqual(TEST_ADDRESS)
             expect(result.items).toBeArray()
-        })
+            expect(result.items.length).toBe(10)
+        }, 10000)
+
+        it('should fetch ERC20 token transfers for Token', async () => {
+            const usdcTokenAdddress = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+            const result = (await web3CovalentSDK.balances.getERC20TokenTransfers(
+                ETHEREUM_CHAIN_ID,
+                TEST_ADDRESS,
+                usdcTokenAdddress,
+            )) as TokenHolders
+            expect(result.items).toBeArray()
+            expect(result.items.length).toBe(10)
+        }, 10000)
     })
+
+    // describe('Base', () => {
+    //     it('fetch a block', async () => {
+    //         const chainId = 1
+    //         const blockHeight = 15410959
+    //         const pageSize = 0
+    //         const result = (await web3CovalentSDK.base.getBlock(
+    //             chainId,
+    //             blockHeight,
+    //             pageSize,
+    //         )) as Block
+
+    //         const block = result.items[0]
+    //         expect(result.items).toBeArray()
+    //         expect(result.updated_at).toBeString()
+    //         expect(block.height).toEqual(blockHeight)
+    //     })
+    // })
 })
