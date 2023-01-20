@@ -3,7 +3,7 @@ import { get } from '../../utils'
 import { ErrorResponse } from './IBalances.interface'
 import {
     BlockHeightResponse,
-    BlockResponse,
+    Block,
     IBase,
     LogEventsByTopicHash,
     LogEventsResponse,
@@ -54,17 +54,17 @@ export class Base implements IBase {
      * @param {number} chainId for the network
      * @param {number} blockHeight blockHeight to get Block from
      * @param {number} [pageSize=100] Number of Blocks to fetch
-     * @returns {(Promise<ErrorResponse | BlockResponse>)}
+     * @returns {(Promise<ErrorResponse | Block>)}
      */
     public async getBlock(
         chainId: number,
         blockHeight: number,
         pageSize = 100,
-    ): Promise<ErrorResponse | BlockResponse> {
-        const url = `${this.API_URL}${chainId}/block_v2/${blockHeight}/&page_size=${pageSize}&key=${this.API_KEY}`
+    ): Promise<ErrorResponse | Block> {
+        const url = `${this.API_URL}${chainId}/block_v2/${blockHeight}/?page_size=${pageSize}&key=${this.API_KEY}`
         try {
             const result = await get(url)
-            return result as BlockResponse
+            return result as Block
         } catch (error) {
             console.error(`Failed to getBlock e: `, error)
             return error as ErrorResponse
@@ -147,7 +147,7 @@ export class Base implements IBase {
         endingBlock: number,
         pageSize = 100,
     ): Promise<ErrorResponse | LogEventsByTopicHash> {
-        const url = `${this.API_URL}${chainId}/events/topics/${topicHash}/?starting-block=$${startingBlock}}&ending-block=${endingBlock}&page_size=${pageSize}&key=${this.API_KEY}`
+        const url = `${this.API_URL}${chainId}/events/topics/${topicHash}/?starting-block=${startingBlock}}&ending-block=${endingBlock}&page_size=${pageSize}&key=${this.API_KEY}`
         try {
             const result = await get(url)
             return result as LogEventsByTopicHash

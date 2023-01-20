@@ -183,10 +183,11 @@ export interface IBalances {
         address: string,
     ) => Promise<ErrorResponse | Portfolio>
 
-    geTokenHoldersAtBlockHeight: (
+    getTokenHoldersAtBlockHeight: (
         chainId: number,
         address: string,
         blockHeight: BlockHeight,
+        pageSize: number,
     ) => Promise<ErrorResponse | TokenHolders>
 
     getERC20TokenTransfers: (

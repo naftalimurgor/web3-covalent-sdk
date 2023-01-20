@@ -57,7 +57,7 @@ export class DEX implements IDEXes {
         dexName: string,
         pageSize: number,
     ): Promise<any> => {
-        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/pools/page_size=${pageSize}&key=${this.API_KEY}`
+        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/pools/?page_size=${pageSize}&key=${this.API_KEY}`
         try {
             const result = await get(url)
             return result
@@ -83,7 +83,7 @@ export class DEX implements IDEXes {
         usdcPoolAddress: string,
         pageSize?: number | undefined,
     ): Promise<any> => {
-        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/pools/address/${usdcPoolAddress}/page_size=${pageSize}&key=${this.API_KEY}`
+        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/pools/address/${usdcPoolAddress}/?page_size=${pageSize}&key=${this.API_KEY}`
         try {
             const result = await get(url)
             return result
@@ -109,7 +109,7 @@ export class DEX implements IDEXes {
         walletAddress: string,
         pageSize?: number | undefined,
     ): Promise<any> => {
-        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/address/${walletAddress}/balances/page_size=${pageSize}&key=${this.API_KEY}`
+        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/address/${walletAddress}/balances/?page_size=${pageSize}&key=${this.API_KEY}`
         try {
             const result = await get(url)
             return result
@@ -133,7 +133,7 @@ export class DEX implements IDEXes {
         dexName: string,
         pageSize?: number | undefined,
     ): Promise<any> => {
-        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/tokens/page_size=${pageSize}&key=${this.API_KEY}`
+        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/tokens/?page_size=${pageSize}&key=${this.API_KEY}`
         try {
             const result = await get(url)
             return result
@@ -176,7 +176,7 @@ export class DEX implements IDEXes {
         usdcContractAddress: string,
         pageSize = 100,
     ): Promise<any> => {
-        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/tokens/address/${usdcContractAddress}/page_size=${pageSize}&key=${this.API_KEY}`
+        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/tokens/address/${usdcContractAddress}/?page_size=${pageSize}&key=${this.API_KEY}`
 
         try {
             const result = await get(url)
@@ -203,7 +203,7 @@ export class DEX implements IDEXes {
         walletAddress: string,
         pageSize?: number | undefined,
     ): Promise<any> => {
-        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/address/${walletAddress}/transactions/page_size=${pageSize}&key=${this.API_KEY}`
+        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/address/${walletAddress}/transactions/?page_size=${pageSize}&key=${this.API_KEY}`
 
         try {
             const result = await get(url)
@@ -230,7 +230,7 @@ export class DEX implements IDEXes {
         linkContractAdress: string,
         pageSize = 100,
     ): Promise<any> => {
-        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/tokens/address/${linkContractAdress}/transactions/page_size=${pageSize}&key=${this.API_KEY}`
+        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/tokens/address/${linkContractAdress}/transactions/?page_size=${pageSize}&key=${this.API_KEY}`
 
         try {
             const result = await get(url)
@@ -257,7 +257,7 @@ export class DEX implements IDEXes {
         usdcContractAddress: string,
         pageSize: number,
     ): Promise<any> => {
-        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/pools/address/${usdcContractAddress}/transactions/page_size=${pageSize}&key=${this.API_KEY}`
+        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/pools/address/${usdcContractAddress}/transactions/?page_size=${pageSize}&key=${this.API_KEY}`
 
         try {
             const result = await get(url)

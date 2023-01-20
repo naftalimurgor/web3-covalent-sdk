@@ -1,6 +1,6 @@
 import { ErrorResponse } from './IBalances.interface'
 
-export interface BlockResponse {
+export interface Block {
     updated_at: string
     items: Array<BlockMetadata>
     pagination?: any
@@ -114,7 +114,7 @@ export interface IBase {
         chainId: number,
         blockHeight: number,
         pageSize?: number,
-    ) => Promise<ErrorResponse | BlockResponse>
+    ) => Promise<ErrorResponse | Block>
 
     getBlockHeights: (
         chainId: number,
