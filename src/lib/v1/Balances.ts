@@ -115,9 +115,8 @@ export class Balances implements IBalances {
         contractAddress: string,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         _blockHeight: BlockHeight,
-        pageSize = 100,
     ): Promise<ErrorResponse | TokenHolders> => {
-        const url = `${this.API_URL}${chainId}/tokens/${contractAddress}/token_holders/?&page_size=${pageSize}&key=${this.API_KEY}`
+        const url = `${this.API_URL}${chainId}/tokens/${contractAddress}/token_holders/?key=${this.API_KEY}`
 
         try {
             const result = await get(url)
@@ -130,7 +129,7 @@ export class Balances implements IBalances {
     }
 
     /**
-     * Fetch ERC20 token transfers for a given toke
+     * Fetch ERC20 token transfers for a given token
      * @date 1/13/2023 - 2:39:51 PM
      *
      * @public
@@ -140,13 +139,12 @@ export class Balances implements IBalances {
      * @param {string} walletAddress wallet adress to query
      * @returns {(Promise<ErrorResponse | ERC20TokenTransfers>)}
      */
-    public readonly getERC20TokenTransfers = async (
+    public readonly getERC20TokenTransfersForAddress = async (
         chainId: number,
         contractAddress: string,
         walletAddress: string,
     ): Promise<ErrorResponse | ERC20TokenTransfers> => {
-        const url = `${this.API_URL}${chainId}}/address/${walletAddress}/transfers_v2/?contract-address=${contractAddress}&key=${this.API_KEY}`
-
+        const url = `${this.API_URL}${chainId}/address/${walletAddress}/transfers_v2/?contract-address=${contractAddress}&key=${this.API_KEY}`
         try {
             const result = await get(url)
             if (result.data) return result.data as ERC20TokenTransfers
@@ -158,7 +156,7 @@ export class Balances implements IBalances {
     }
 
     /**
-     * Description placeholder
+     * Fetch changes in Token holders between two block heights.
      * @date 1/13/2023 - 2:39:51 PM
      *
      * @public
@@ -168,12 +166,12 @@ export class Balances implements IBalances {
      * @param {{ startBlock: number; endingBlock: number }} blockHeight
      * @returns {(Promise<TokenHolders | ErrorResponse>)}
      */
-    public readonly getChangesInTokenHoldersBetweenTwoBlocHeights = async (
+    public readonly getChangesInTokenHoldersBetweenTwoBlockHeights = async (
         chainId: number,
         contractAddress: string,
         blockHeight: BlockHeight,
     ): Promise<TokenHolders | ErrorResponse> => {
-        const url = `${this.API_URL}${chainId}/${chainId}}/tokens/${contractAddress}/token_holders_changes/?starting-block=${blockHeight.startingBlock}&ending-block=${blockHeight.endingBlock}&key=${this.API_KEY}`
+        const url = `${this.API_URL}${chainId}/tokens/${contractAddress}/token_holders_changes/?starting-block=${blockHeight.startingBlock}&ending-block=${blockHeight.endingBlock}&key=${this.API_KEY}`
 
         try {
             const result = await get(url)

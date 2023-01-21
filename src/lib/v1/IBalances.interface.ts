@@ -168,6 +168,15 @@ export interface TokenHolders {
     address: string
     items: Array<any>
     chain_id: number
+    update_at: string
+    next_update_at: string
+    quote_currency: string
+    pagination: {
+        has_more: boolean
+        page_number: number
+        page_size: number
+        total_count: null | number
+    }
 }
 
 export type BlockHeight = {
@@ -190,13 +199,14 @@ export interface IBalances {
         pageSize: number,
     ) => Promise<ErrorResponse | TokenHolders>
 
-    getERC20TokenTransfers: (
+    getERC20TokenTransfersForAddress: (
         chainId: number,
         contractAddress: string,
         walletAddress: string,
+        pageSize: number,
     ) => Promise<ErrorResponse | ERC20TokenTransfers>
 
-    getChangesInTokenHoldersBetweenTwoBlocHeights: (
+    getChangesInTokenHoldersBetweenTwoBlockHeights: (
         chainId: number,
         contractAddress: string,
         blockHeight: BlockHeight,

@@ -16,7 +16,12 @@ import { NFTs } from '../lib/v1/NFTS'
 import { Transactions } from '../lib/v1/Transactions'
 import { SDKConfig } from '../types'
 import * as dotenv from 'dotenv'
-import { Balance, Portfolio, TokenHolders } from '../lib/v1/IBalances.interface'
+import {
+    Balance,
+    ERC20TokenTransfers,
+    Portfolio,
+    TokenHolders,
+} from '../lib/v1/IBalances.interface'
 
 dotenv.config()
 
@@ -77,21 +82,40 @@ describe('V1 its', () => {
                 ETHEREUM_CHAIN_ID,
                 '0xBd3531dA5CF5857e7CfAA92426877b022e612cf8',
                 blockHeight,
-                10,
             )) as TokenHolders
+
             expect(result.items).toBeArray()
-            expect(result.items.length).toBe(10)
+            expect(result.items.length).toBe(100)
         }, 10000)
 
-        it('should fetch ERC20 token transfers for Token', async () => {
-            const usdcTokenAdddress = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
-            const result = (await web3CovalentSDK.balances.getERC20TokenTransfers(
+        it('should fetch ERC20 token transfers of an ERC20 for a given Address (EOA)', async () => {
+            const walletAddress = '0xDaF81c3603C83f952376F5829a360A5822f5B5Da'
+            const usdcTokenAddress = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+
+            const result = (await web3CovalentSDK.balances.getERC20TokenTransfersForAddress(
                 ETHEREUM_CHAIN_ID,
-                TEST_ADDRESS,
-                usdcTokenAdddress,
-            )) as TokenHolders
+                usdcTokenAddress,
+                walletAddress,
+            )) as ERC20TokenTransfers
+
+            expect(result.address).toBe(walletAddress.toLowerCase())
+            expect(result.updated_at).toBeString()
             expect(result.items).toBeArray()
-            expect(result.items.length).toBe(10)
+        }, 10000)
+
+        it('should fetch Token holders token changes between two block heights', async () => {
+            const usdcTokenAdddress = '0xBd3531dA5CF5857e7CfAA92426877b022e612cf8'
+            const blockHeight = Object.freeze({ startingBlock: 15410833, endingBlock: 'latest' })
+            console.info(blockHeight)
+
+            const result =
+                (await web3CovalentSDK.balances.getChangesInTokenHoldersBetweenTwoBlockHeights(
+                    ETHEREUM_CHAIN_ID,
+                    usdcTokenAdddress,
+                    blockHeight,
+                )) as TokenHolders
+            console.info(result)
+            expect(result.items).toBeArray()
         }, 10000)
     })
 
