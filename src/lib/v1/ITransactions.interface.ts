@@ -1,12 +1,12 @@
 import { ErrorResponse } from './IBalances.interface'
 
-export interface TransactionResponse {
+export interface Transaction {
     updated_at: string
-    items: Array<Transaction>
+    items: Array<TransactionMetadata>
     pagination?: number
 }
 
-interface Transaction {
+interface TransactionMetadata {
     block_signed_at: string
     block_height: number
     tx_hash: string
@@ -104,7 +104,7 @@ export interface ITransactions {
     ) => Promise<AddressTransactions | ErrorResponse>
 
     getTransaction: (
-        chainId: string,
+        chainId: number,
         transactionHash: string,
-    ) => Promise<TransactionResponse | ErrorResponse>
+    ) => Promise<Transaction | ErrorResponse>
 }

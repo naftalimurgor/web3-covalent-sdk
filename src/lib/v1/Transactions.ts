@@ -1,6 +1,6 @@
 import { ErrorResponse, SDKConfig } from '../../types'
 import { get } from '../../utils'
-import { AddressTransactions, ITransactions, TransactionResponse } from './ITransactions.interface'
+import { AddressTransactions, ITransactions, Transaction } from './ITransactions.interface'
 
 /**
  * Transactions class
@@ -55,34 +55,35 @@ export class Transactions implements ITransactions {
     public getAddressTransactions = async (
         chainId: string,
         walletAddress: string,
-        pageSize = 1,
     ): Promise<AddressTransactions | ErrorResponse> => {
-        const url = `${this.API_URL}${chainId}/address/${walletAddress}/transactions_v2/&${pageSize}&key=${this.API_KEY}`
+        const url = `${this.API_URL}${chainId}/address/${walletAddress}/transactions_v2/?key=${this.API_KEY}`
         try {
             const result = await get(url)
-            return result as AddressTransactions
+            if (result.data) return result.data as AddressTransactions
+            else throw new Error(result.message)
         } catch (error) {
             return error as ErrorResponse
         }
     }
 
     /**
-     * Fetch transaction data with their decoded event logs based on txHashs
+     * Fetch transaction data with their decoded event logs based on txHash
      * @date 1/13/2023 - 6:30:02 PM
      *
      * @async
      * @param {string} chainId
      * @param {string} transactionHash
-     * @returns {(Promise<TransactionResponse | ErrorResponse>)}
+     * @returns {(Promise<Transaction | ErrorResponse>)}
      */
     public getTransaction = async (
-        chainId: string,
+        chainId: number,
         transactionHash: string,
-    ): Promise<TransactionResponse | ErrorResponse> => {
+    ): Promise<Transaction | ErrorResponse> => {
         const url = `${this.API_URL}${chainId}/transaction_v2/${transactionHash}/?key=${this.API_KEY}`
         try {
             const result = await get(url)
-            return result as TransactionResponse
+            if (result.data) return result.data as Transaction
+            else throw new Error(result.message)
         } catch (error) {
             return error as ErrorResponse
         }
