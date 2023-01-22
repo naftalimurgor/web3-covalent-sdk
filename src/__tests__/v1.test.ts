@@ -234,5 +234,78 @@ describe('V1 its', () => {
         })
 
         // get single network exchange token test:
+        it('should fetch xy=k Transaction for account address', async () => {
+            const dexname = 'uniswap_v2'
+            const walletAddress = '0xDaF81c3603C83f952376F5829a360A5822f5B5Da'
+            const result = await web3CovalentSDK.dexes.getXYTransactionsForAccountAddress(
+                ETHEREUM_CHAIN_ID,
+                dexname,
+                walletAddress,
+            )
+
+            expect(result).toBeDefined()
+            expect(result.items).toBeArray()
+        }, 10000)
+
+        it('should fetch xy=k Transaction for Token address', async () => {
+            const dexname = 'uniswap_v2'
+            const linkAddress = '0x514910771AF9Ca656af840dff83E8264EcF986CA'
+            const result = await web3CovalentSDK.dexes.getXYTransactionsForTokenAddress(
+                ETHEREUM_CHAIN_ID,
+                dexname,
+                linkAddress,
+            )
+
+            expect(result).toBeDefined()
+            expect(result.items).toBeArray()
+        }, 10000)
+
+        it('should fetch xy=k Transaction for Token address', async () => {
+            const dexname = 'uniswap_v2'
+            const usdcPoolAddress = '0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc'
+            const result = await web3CovalentSDK.dexes.getXYTransactionsForExchange(
+                ETHEREUM_CHAIN_ID,
+                dexname,
+                usdcPoolAddress,
+            )
+
+            expect(result).toBeDefined()
+            expect(result.items).toBeArray()
+        }, 10000)
+
+        it('should fetch xy=k Transactions for Exchange', async () => {
+            const dexname = 'uniswap_v2'
+            const usdcPoolAddress = '0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc'
+            const result = await web3CovalentSDK.dexes.getXYTransactionsForExchange(
+                ETHEREUM_CHAIN_ID,
+                dexname,
+                usdcPoolAddress,
+            )
+
+            expect(result).toBeDefined()
+            expect(result.items).toBeArray()
+        }, 10000)
+
+        it('should fetch xy=k Ecosystem Chart Data', async () => {
+            const dexname = 'uniswap_v2'
+            const result = await web3CovalentSDK.dexes.getXYEcosystemChartData(
+                ETHEREUM_CHAIN_ID,
+                dexname,
+            )
+
+            expect(result).toBeDefined()
+            expect(result.items).toBeArray()
+        }, 10000)
+
+        it('should fetch xy=k Health Data', async () => {
+            const dexname = 'uniswap_v2'
+            const result = await web3CovalentSDK.dexes.getXYHealthData(ETHEREUM_CHAIN_ID, dexname)
+
+            expect(result).toBeDefined()
+            expect(result.items).toBeArray()
+        }, 10000)
+    })
+    describe('NFTS', () => {
+        // it('should fetch NFTToken Ids', async () => {})
     })
 })
