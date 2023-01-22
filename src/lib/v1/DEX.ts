@@ -1,6 +1,7 @@
 import { SDKConfig } from '../../types'
 import { get } from '../../utils'
-import { IDEXes } from './IDEXes.interface'
+import { ErrorResponse } from './IBalances.interface'
+import { AddressBalance, IDEXes, Pools, SupportedDexes } from './IDEXes.interface'
 
 /**
  * DEX class for fetching xy=k dex data
@@ -19,7 +20,7 @@ export class DEX implements IDEXes {
      * @private
      * @type {!string}
      */
-    private V1_API_URI!: string
+    private API_URI!: string
 
     /**
      * Description placeholder
@@ -39,7 +40,7 @@ export class DEX implements IDEXes {
      */
     constructor(config: SDKConfig) {
         this.API_KEY = config.apiKey
-        this.V1_API_URI = config.apiV1Url
+        this.API_URI = config.apiV1Url
     }
 
     /**
@@ -55,14 +56,14 @@ export class DEX implements IDEXes {
     public getXYPools = async (
         chainId: number,
         dexName: string,
-        pageSize: number,
-    ): Promise<any> => {
-        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/pools/?page_size=${pageSize}&key=${this.API_KEY}`
+    ): Promise<Pools | ErrorResponse> => {
+        const url = `${this.API_URI}${chainId}/xy=k/${dexName}/pools/?key=${this.API_KEY}`
         try {
             const result = await get(url)
-            return result
+            if (result.data) return result.data as Pools
+            else throw new Error(result.message)
         } catch (error) {
-            return error
+            return error as Pools
         }
     }
 
@@ -81,14 +82,15 @@ export class DEX implements IDEXes {
         chainId: number,
         dexName: string,
         usdcPoolAddress: string,
-        pageSize?: number | undefined,
-    ): Promise<any> => {
-        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/pools/address/${usdcPoolAddress}/?page_size=${pageSize}&key=${this.API_KEY}`
+    ): Promise<Pools | ErrorResponse> => {
+        const url = `${this.API_URI}${chainId}/xy=k/${dexName}/pools/address/${usdcPoolAddress}/?key=${this.API_KEY}`
         try {
             const result = await get(url)
-            return result
+            if (result.data) return result.data
+            else throw new Error(result.message)
         } catch (error) {
-            return error
+            console.error(`failed to getXYPoolsByAddress e:`, error)
+            return error as ErrorResponse
         }
     }
 
@@ -107,14 +109,15 @@ export class DEX implements IDEXes {
         chainId: number,
         dexName: string,
         walletAddress: string,
-        pageSize?: number | undefined,
-    ): Promise<any> => {
-        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/address/${walletAddress}/balances/?page_size=${pageSize}&key=${this.API_KEY}`
+    ): Promise<AddressBalance | ErrorResponse> => {
+        const url = `${this.API_URI}${chainId}/xy=k/${dexName}/address/${walletAddress}/balances/?key=${this.API_KEY}`
+
         try {
             const result = await get(url)
-            return result
+            if (result.data) return result.data as AddressBalance
+            else throw new Error(result.message)
         } catch (error) {
-            return error
+            return error as ErrorResponse
         }
     }
 
@@ -125,20 +128,17 @@ export class DEX implements IDEXes {
      * @async
      * @param {number} chainId
      * @param {string} dexName
-     * @param {?(number | undefined)} [pageSize]
      * @returns {Promise<any>}
      */
-    public getXYNetworkExchangeTokens = async (
-        chainId: number,
-        dexName: string,
-        pageSize?: number | undefined,
-    ): Promise<any> => {
-        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/tokens/?page_size=${pageSize}&key=${this.API_KEY}`
+    public getXYNetworkExchangeTokens = async (chainId: number, dexName: string): Promise<any> => {
+        const url = `${this.API_URI}${chainId}/xy=k/${dexName}/tokens/?key=${this.API_KEY}`
+
         try {
             const result = await get(url)
-            return result
+            if (result.data) return result.data
+            else throw new Error(result.message)
         } catch (error) {
-            return error
+            return error as ErrorResponse
         }
     }
 
@@ -147,15 +147,17 @@ export class DEX implements IDEXes {
      * @date 1/13/2023 - 6:02:32 PM
      *
      * @async
-     * @returns {Promise<any>}
+     * @returns {Promise<SupportedDexes|ErrorResponse>}
      */
-    public getXYSupportedDEXes = async (): Promise<any> => {
-        const url = `${this.V1_API_URI}/xy=k/supported_dexes/&key=${this.API_KEY}`
+    public getXYSupportedDEXes = async (): Promise<SupportedDexes | ErrorResponse> => {
+        const url = `${this.API_URI}xy=k/supported_dexes/?key=${this.API_KEY}`
+
         try {
             const result = await get(url)
-            return result
+            if (result.data) return result.data as SupportedDexes
+            else throw new Error(result.message) as ErrorResponse
         } catch (error) {
-            return error
+            return error as ErrorResponse
         }
     }
 
@@ -167,22 +169,21 @@ export class DEX implements IDEXes {
      * @param {string} chainId
      * @param {string} dexName
      * @param {string} usdcContractAddress
-     * @param {number} [pageSize=100]
      * @returns {Promise<any>}
      */
     public getXYSingleNetworkExchangeToken = async (
         chainId: string,
         dexName: string,
         usdcContractAddress: string,
-        pageSize = 100,
-    ): Promise<any> => {
-        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/tokens/address/${usdcContractAddress}/?page_size=${pageSize}&key=${this.API_KEY}`
+    ): Promise<any | ErrorResponse> => {
+        const url = `${this.API_URI}${chainId}/xy=k/${dexName}/tokens/address/${usdcContractAddress}/?key=${this.API_KEY}`
 
         try {
             const result = await get(url)
-            return result
+            if (result.data) return result.data
+            else throw new Error(result.message)
         } catch (error) {
-            return error
+            return error as ErrorResponse
         }
     }
 
@@ -201,13 +202,13 @@ export class DEX implements IDEXes {
         chainId: number,
         dexName: string,
         walletAddress: string,
-        pageSize?: number | undefined,
     ): Promise<any> => {
-        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/address/${walletAddress}/transactions/?page_size=${pageSize}&key=${this.API_KEY}`
+        const url = `${this.API_URI}${chainId}/xy=k/${dexName}/address/${walletAddress}/transactions/?key=${this.API_KEY}`
 
         try {
             const result = await get(url)
-            return result
+            if (result.data) return result.data
+            else throw new Error(result.message)
         } catch (error) {
             return error
         }
@@ -230,7 +231,7 @@ export class DEX implements IDEXes {
         linkContractAdress: string,
         pageSize = 100,
     ): Promise<any> => {
-        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/tokens/address/${linkContractAdress}/transactions/?page_size=${pageSize}&key=${this.API_KEY}`
+        const url = `${this.API_URI}/${chainId}/xy=k/${dexName}/tokens/address/${linkContractAdress}/transactions/?page_size=${pageSize}&key=${this.API_KEY}`
 
         try {
             const result = await get(url)
@@ -257,7 +258,7 @@ export class DEX implements IDEXes {
         usdcContractAddress: string,
         pageSize: number,
     ): Promise<any> => {
-        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/pools/address/${usdcContractAddress}/transactions/?page_size=${pageSize}&key=${this.API_KEY}`
+        const url = `${this.API_URI}/${chainId}/xy=k/${dexName}/pools/address/${usdcContractAddress}/transactions/?page_size=${pageSize}&key=${this.API_KEY}`
 
         try {
             const result = await get(url)
@@ -278,12 +279,8 @@ export class DEX implements IDEXes {
      * @param {?(number | undefined)} [pageSize]
      * @returns {Promise<any>}
      */
-    public getXYEcosystemChartData = async (
-        chainId: number,
-        dexName: string,
-        pageSize?: number | undefined,
-    ): Promise<any> => {
-        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/ecosystem/page_size=${pageSize}&key=${this.API_KEY}`
+    public getXYEcosystemChartData = async (chainId: number, dexName: string): Promise<any> => {
+        const url = `${this.API_URI}${chainId}/xy=k/${dexName}/ecosystem/?key=${this.API_KEY}`
 
         try {
             const result = await get(url)
@@ -300,7 +297,6 @@ export class DEX implements IDEXes {
      * @async
      * @param {number} chainId
      * @param {string} dexName
-     * @param {?(number | undefined)} [pageSize]
      * @returns {Promise<any>}
      */
     public getXYHealthData = async (
@@ -308,7 +304,7 @@ export class DEX implements IDEXes {
         dexName: string,
         pageSize?: number | undefined,
     ): Promise<any> => {
-        const url = `${this.V1_API_URI}/${chainId}/xy=k/${dexName}/health/page_size=${pageSize}&key=${pageSize}`
+        const url = `${this.API_URI}${chainId}/xy=k/${dexName}/health/?key=${pageSize}`
 
         try {
             const result = await get(url)
