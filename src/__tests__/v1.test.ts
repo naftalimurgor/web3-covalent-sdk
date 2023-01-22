@@ -22,6 +22,13 @@ import {
     Portfolio,
     TokenHolders,
 } from '../lib/v1/IBalances.interface'
+import { Block, BlockHeightRes, LogEvents, LogEventsByTopicHash } from '../lib/v1/IBase.inteface'
+import {
+    AddressBalance,
+    NetworkExchangeTokens,
+    Pools,
+    SupportedDexes,
+} from '../lib/v1/IDEXes.interface'
 
 dotenv.config()
 
@@ -106,7 +113,6 @@ describe('V1 its', () => {
         it('should fetch Token holders token changes between two block heights', async () => {
             const usdcTokenAdddress = '0xBd3531dA5CF5857e7CfAA92426877b022e612cf8'
             const blockHeight = Object.freeze({ startingBlock: 15410833, endingBlock: 'latest' })
-            console.info(blockHeight)
 
             const result =
                 (await web3CovalentSDK.balances.getChangesInTokenHoldersBetweenTwoBlockHeights(
@@ -114,26 +120,119 @@ describe('V1 its', () => {
                     usdcTokenAdddress,
                     blockHeight,
                 )) as TokenHolders
-            console.info(result)
+
             expect(result.items).toBeArray()
         }, 10000)
     })
 
-    // describe('Base', () => {
-    //     it('fetch a block', async () => {
-    //         const chainId = 1
-    //         const blockHeight = 15410959
-    //         const pageSize = 0
-    //         const result = (await web3CovalentSDK.base.getBlock(
-    //             chainId,
-    //             blockHeight,
-    //             pageSize,
-    //         )) as Block
+    describe('Base', () => {
+        it('fetch a block given a block height', async () => {
+            const chainId = 1
+            const blockHeight = 15410959
+            const result = (await web3CovalentSDK.base.getBlock(chainId, blockHeight)) as Block
+            const block = result.items[0]
+            expect(result.items).toBeArray()
+            expect(result.updated_at).toBeString()
+            expect(block.height).toEqual(blockHeight)
+        })
 
-    //         const block = result.items[0]
-    //         expect(result.items).toBeArray()
-    //         expect(result.updated_at).toBeString()
-    //         expect(block.height).toEqual(blockHeight)
-    //     })
-    // })
+        it('fetch block heights withing given date ranges', async () => {
+            const startDate = '2022-01-01'
+            const endDate = '2022-01-02'
+            const result = (await web3CovalentSDK.base.getBlockHeights(
+                ETHEREUM_CHAIN_ID,
+                startDate,
+                endDate,
+            )) as BlockHeightRes
+            expect(result.updated_at).toBeString()
+            expect(result.items).toBeArray()
+        })
+
+        it('should fetch log events for a smart contract', async () => {
+            const usdcContractAddress = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+            const startingBlock = 15410833
+            const endingBlock = 15410838
+            const result = (await web3CovalentSDK.base.getLogEventsByContractAddress(
+                ETHEREUM_CHAIN_ID,
+                usdcContractAddress,
+                startingBlock,
+                endingBlock,
+            )) as LogEvents
+
+            expect(result.updated_at).toBeString()
+            expect(result.items).toBeArray()
+        })
+
+        it('should fetch log events by topicHash', async () => {
+            const topicHash = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
+            const startingBlock = 15410833
+            const endingBlock = 15410838
+            const result = (await web3CovalentSDK.base.getLogEventsByTopicHash(
+                ETHEREUM_CHAIN_ID,
+                topicHash,
+                startingBlock,
+                endingBlock,
+            )) as LogEventsByTopicHash
+            expect(result.updated_at).toBeString()
+            expect(result.items).toBeArray()
+        })
+    })
+
+    describe('DEX', () => {
+        it('should get xy=k pool info', async () => {
+            const dexname = 'uniswap_v2'
+            const result = (await web3CovalentSDK.dexes.getXYPools(
+                ETHEREUM_CHAIN_ID,
+                dexname,
+            )) as Pools
+            expect(result.updated_at).toBeString()
+            expect(result.items).toBeArray()
+            expect(result.pagination).toBeDefined()
+        })
+
+        it('should get xy=k pool info by address', async () => {
+            const dexName = 'uniswap_v2'
+            const usdcPoolAddress = '0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc'
+
+            const result = (await web3CovalentSDK.dexes.getXYPoolsByAddress(
+                ETHEREUM_CHAIN_ID,
+                dexName,
+                usdcPoolAddress,
+            )) as Pools
+            expect(result.items).toBeArray()
+            expect(result.updated_at).toBeDateString()
+        })
+
+        it('should get address exchange balance', async () => {
+            const dexName = 'uniswap_v2'
+            const walletAddress = '0xDaF81c3603C83f952376F5829a360A5822f5B5Da'
+
+            const result = (await web3CovalentSDK.dexes.getXYAddressExchangeBalances(
+                ETHEREUM_CHAIN_ID,
+                dexName,
+                walletAddress,
+            )) as AddressBalance
+            expect(result.address).toEqual(walletAddress.toLowerCase())
+        })
+
+        it('should fetch network exchange tokens', async () => {
+            const dexname = 'uniswap_v2'
+            const result = (await web3CovalentSDK.dexes.getXYNetworkExchangeTokens(
+                ETHEREUM_CHAIN_ID,
+                dexname,
+            )) as NetworkExchangeTokens
+
+            expect(result.updated_at).toBeDateString()
+            expect(result.items).toBeArray()
+        })
+
+        it('should fetch xy=k supported dexes', async () => {
+            const result = (await web3CovalentSDK.dexes.getXYSupportedDEXes()) as SupportedDexes
+
+            expect(result.items).toBeArray()
+            expect(result.updated_at).toBeDateString()
+        })
+
+        // get single network exchange token test:
+    })
 })

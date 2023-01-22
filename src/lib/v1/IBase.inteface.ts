@@ -11,7 +11,7 @@ interface BlockMetadata {
     height: number
 }
 
-export interface BlockHeightResponse {
+export interface BlockHeightRes {
     updated_at: string
     items: Array<BlockHeightMetadata>
     pagination: Pagination
@@ -29,7 +29,7 @@ interface BlockHeightMetadata {
     height: number
 }
 
-export interface LogEventsResponse {
+export interface LogEvents {
     updated_at: string
     items: Array<LogEventMetadata>
     pagination: Pagination
@@ -121,7 +121,7 @@ export interface IBase {
         startDate: string,
         endDate: string,
         pageSize: number,
-    ) => Promise<ErrorResponse | BlockHeightResponse>
+    ) => Promise<ErrorResponse | BlockHeightRes>
 
     getLogEventsByContractAddress: (
         chainId: number,
@@ -129,12 +129,12 @@ export interface IBase {
         startingBlock: number,
         endingBlock: number,
         pageSize: number,
-    ) => Promise<ErrorResponse | LogEventsResponse>
+    ) => Promise<ErrorResponse | LogEvents>
 
     getLogEventsByTopicHash: (
         chainId: number,
         topicHash: string,
         startingBlock: number,
-        pageSize: number,
+        endingBlock: number,
     ) => Promise<ErrorResponse | LogEventsByTopicHash>
 }

@@ -1,13 +1,7 @@
 import { SDKConfig } from '../../types'
 import { get } from '../../utils'
 import { ErrorResponse } from './IBalances.interface'
-import {
-    BlockHeightResponse,
-    Block,
-    IBase,
-    LogEventsByTopicHash,
-    LogEventsResponse,
-} from './IBase.inteface'
+import { Block, IBase, LogEventsByTopicHash, LogEvents, BlockHeightRes } from './IBase.inteface'
 
 /**
  * Class for Base Covalent API calls
@@ -56,15 +50,12 @@ export class Base implements IBase {
      * @param {number} [pageSize=100] Number of Blocks to fetch
      * @returns {(Promise<ErrorResponse | Block>)}
      */
-    public async getBlock(
-        chainId: number,
-        blockHeight: number,
-        pageSize = 100,
-    ): Promise<ErrorResponse | Block> {
-        const url = `${this.API_URL}${chainId}/block_v2/${blockHeight}/?page_size=${pageSize}&key=${this.API_KEY}`
+    public async getBlock(chainId: number, blockHeight: number): Promise<ErrorResponse | Block> {
+        const url = `${this.API_URL}${chainId}/block_v2/${blockHeight}/?key=${this.API_KEY}`
         try {
             const result = await get(url)
-            return result as Block
+            if (result.data) return result.data as Block
+            else throw new Error(result.message)
         } catch (error) {
             console.error(`Failed to getBlock e: `, error)
             return error as ErrorResponse
@@ -81,18 +72,18 @@ export class Base implements IBase {
      * @param {string} startDate Datestring of the start date: YYYY:MM:mm:ss
      * @param {string} endDate Datestring of the end date: YYYY:MM:mm:ss
      * @param {number} [pageSize=100]
-     * @returns {(Promise<ErrorResponse | BlockHeightResponse>)}
+     * @returns {(Promise<ErrorResponse | BlockHeight>)}
      */
     public async getBlockHeights(
         chainId: number,
         startDate: string,
         endDate: string,
-        pageSize = 100,
-    ): Promise<ErrorResponse | BlockHeightResponse> {
-        const url = `${this.API_URL}${chainId}${chainId}/block_v2/&${startDate}&${endDate}&page_size=${pageSize}&key=${this.API_KEY}`
+    ): Promise<ErrorResponse | BlockHeightRes> {
+        const url = `${this.API_URL}${chainId}/block_v2/${startDate}/${endDate}/?key=${this.API_KEY}`
         try {
             const result = await get(url)
-            return result as BlockHeightResponse
+            if (result.data) return result.data as BlockHeightRes
+            else throw new Error(result.message)
         } catch (error) {
             console.error(`Failed to getBlockHeights e: `, error)
             return error as ErrorResponse
@@ -109,20 +100,21 @@ export class Base implements IBase {
      * @param {string} contractAddress of the Contract
      * @param {number} startingBlock Block height to fetch logs from
      * @param {number} endingBlock block height to fetch logs up to
-     * @returns {(Promise<ErrorResponse | LogEventsResponse>)}
+     * @returns {(Promise<ErrorResponse | LogEvents>)}
      */
     public async getLogEventsByContractAddress(
         chainId: number,
         contractAddress: string,
         startingBlock: number,
         endingBlock: number,
-    ): Promise<ErrorResponse | LogEventsResponse> {
+    ): Promise<ErrorResponse | LogEvents> {
         const url = `${this.API_URL}${chainId}/events/address/${contractAddress}/?starting-block=${startingBlock}&ending-block=${endingBlock}&key=${this.API_KEY}`
         try {
             const result = await get(url)
-            return result as LogEventsResponse
+            if (result.data) return result.data as LogEvents
+            else throw new Error(result.message)
         } catch (error) {
-            console.error(`Failed to getBlockHeights e: `, error)
+            console.error(`Failed to getLogEventsByContractAddress e: `, error)
             return error as ErrorResponse
         }
     }
@@ -145,14 +137,14 @@ export class Base implements IBase {
         topicHash: string,
         startingBlock: number,
         endingBlock: number,
-        pageSize = 100,
     ): Promise<ErrorResponse | LogEventsByTopicHash> {
-        const url = `${this.API_URL}${chainId}/events/topics/${topicHash}/?starting-block=${startingBlock}}&ending-block=${endingBlock}&page_size=${pageSize}&key=${this.API_KEY}`
+        const url = `${this.API_URL}${chainId}/events/topics/${topicHash}/?starting-block=${startingBlock}&ending-block=${endingBlock}&key=${this.API_KEY}`
         try {
             const result = await get(url)
-            return result as LogEventsByTopicHash
+            if (result.data) return result.data as LogEventsByTopicHash
+            else throw new Error(result.message)
         } catch (error) {
-            console.error(`Failed to getBlockHeights e: `, error)
+            console.error(`Failed to getLogEventsByTopicHash e: `, error)
             return error as ErrorResponse
         }
     }
