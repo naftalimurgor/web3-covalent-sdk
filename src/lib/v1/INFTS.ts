@@ -26,9 +26,8 @@ interface TokenMetadata {
 export interface INFTs {
     getNFTTokenIDsForContract: (
         chainId: string,
+        tokenId: number,
         contractAddress: string,
-        pageSize?: number,
-        pageNumber?: number,
     ) => Promise<NFTTokenIds | ErrorResponse>
 
     getNFTTransactionsForContract: (

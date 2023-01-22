@@ -55,14 +55,15 @@ export class NFTs implements INFTs {
      */
     public getNFTTokenIDsForContract = async (
         chainId: string,
+        tokenId: number,
         contractAddress: string,
-        pageSize?: number | undefined,
-        _pageNumber?: number | undefined,
     ): Promise<NFTTokenIds | ErrorResponse> => {
-        const url = `${this.API_URL}${chainId}/tokens/${contractAddress}}/nft_metadata/{{token_id}}/&page_size=${pageSize}&key=${this.API_KEY}`
+        const url = `${this.API_URL}${chainId}/tokens/${contractAddress}/nft_metadata/${tokenId}/?key=${this.API_KEY}`
+
         try {
             const result = await get(url)
-            return result as NFTTokenIds
+            if (result.data) return result.data
+            else throw new Error(result.message)
         } catch (error) {
             console.error(`Failed to getNFTTokenIDsForContrac e: `, error)
             return error as ErrorResponse
@@ -85,15 +86,14 @@ export class NFTs implements INFTs {
         chainId: string,
         tokenId: number,
         contractAddress: string,
-        pageSize?: number | undefined,
-        _pageNumber?: number | undefined,
     ): Promise<any> => {
-        const url = `${this.API_URL}${chainId}/tokens/${contractAddress}/nft_transactions/${tokenId}/&page_size=${pageSize}&key=${this.API_KEY}`
+        const url = `${this.API_URL}${chainId}/tokens/${contractAddress}/nft_transactions/${tokenId}/?key=${this.API_KEY}`
         try {
             const result = await get(url)
-            return result
+            if (result.data) return result.data
+            else throw new Error(result.message)
         } catch (error) {
-            console.error(`Failed to getNFTTokenIDsForContrac e: `, error)
+            console.error(`Failed to getNFTTransactionsForContract e: `, error)
             return error
         }
     }
@@ -113,12 +113,12 @@ export class NFTs implements INFTs {
         chainId: string,
         contractAddress: string,
         tokenId: number,
-        pageSize?: number,
     ): Promise<any> => {
-        const url = `${this.API_URL}${chainId}/tokens/${contractAddress}/nft_metadata/${tokenId}/&page_size=${pageSize}&key=${this.API_KEY}`
+        const url = `${this.API_URL}${chainId}/tokens/${contractAddress}/nft_metadata/${tokenId}/?key=${this.API_KEY}`
         try {
             const result = await get(url)
-            return result
+            if (result.data) return result.data
+            else throw new Error(result.message)
         } catch (error) {
             console.error(`Failed to getExternalNFTContractMetadata e: `, error)
             return error
