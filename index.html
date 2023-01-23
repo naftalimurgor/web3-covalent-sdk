@@ -1,0 +1,378 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>web3-covalent-sdk</title>
+	<meta name="description" content="Documentation for web3-covalent-sdk">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">web3-covalent-sdk</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>web3-covalent-sdk</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<p align="center">
+					<img width="250" height="250" src="https://github.com/naftalimurgor/web3-covalent-sdk/blob/main/web3-covalent-sdk.png">
+				</p>
+				<a href="#web3-covalent-sdk" id="web3-covalent-sdk" style="color: inherit; text-decoration: none;">
+					<h1>web3-covalent-sdk</h1>
+				</a>
+				<p>A full-fledged sdk for the Covalent Unified API for querying on-chain data across mutliple chains. </p>
+				<p>Check out <a href="https://www.covalenthq.com/platform/#/">Covalent API</a> for more info.</p>
+				<a href="#quick-start" id="quick-start" style="color: inherit; text-decoration: none;">
+					<h2>Quick Start</h2>
+				</a>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h3>Installation</h3>
+				</a>
+				<p>If using npm:</p>
+				<pre><code class="language-sh">npm i web3-covalent-sdk
+</code></pre>
+				<p>or with Yarn:</p>
+				<pre><code class="language-sh">yarn add web3-covalent-sdk
+</code></pre>
+				<a href="#usecase-addressed" id="usecase-addressed" style="color: inherit; text-decoration: none;">
+					<h2>Usecase addressed</h2>
+				</a>
+				<p>A unified JavaScript SDK written in TypeScript that can be used in a Reactjs web application (in the Model Layer, taking into account that React applications follow the MVVM pattern) to access the Covalent Unified API as all-in-one library for Frontend projects.</p>
+				<a href="#pitch-deck" id="pitch-deck" style="color: inherit; text-decoration: none;">
+					<h2>Pitch Deck</h2>
+				</a>
+				<p><a href="https://www.canva.com/design/DAFXW9uylME/o4EpvuYo8YAALjvrDuSRZg/view?utm_content=DAFXW9uylME&amp;utm_campaign=designshare&amp;utm_medium=link&amp;utm_source=publishsharelink">View Pitch Deck</a></p>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<a href="#1-query-nft-data" id="1-query-nft-data" style="color: inherit; text-decoration: none;">
+					<h3>1. Query NFT data</h3>
+				</a>
+				<a href="#2-query-transactions" id="2-query-transactions" style="color: inherit; text-decoration: none;">
+					<h3>2. Query Transactions</h3>
+				</a>
+				<a href="#3-query-block-data" id="3-query-block-data" style="color: inherit; text-decoration: none;">
+					<h3>3. Query Block Data</h3>
+				</a>
+				<a href="#4-query-xyk-data" id="4-query-xyk-data" style="color: inherit; text-decoration: none;">
+					<h3>4. Query xy=k Data</h3>
+				</a>
+				<a href="#5-query-balances" id="5-query-balances" style="color: inherit; text-decoration: none;">
+					<h3>5. Query Balances</h3>
+				</a>
+				<a href="#docs" id="docs" style="color: inherit; text-decoration: none;">
+					<h2>Docs</h2>
+				</a>
+				<p>Read more </p>
+				<a href="#try-out-in-code-sandbox" id="try-out-in-code-sandbox" style="color: inherit; text-decoration: none;">
+					<h2>Try out in Code Sandbox</h2>
+				</a>
+				<p><a href="">Code Sandbox</a></p>
+				<a href="#covalent-api-endpoints-used-v1" id="covalent-api-endpoints-used-v1" style="color: inherit; text-decoration: none;">
+					<h2>Covalent API endpoints used (V1)</h2>
+				</a>
+				<ol>
+					<li><p>Balances endpoint</p>
+					</li>
+					<li><p>v1/{{chain_id}}/address/{{wallet_address}}/balances_v2/        -Get Token Balances for Address</p>
+					</li>
+					<li><p>v1/{{chain_id}}/address/{{wallet_address}}/portfolio_v2/       -Get Historic Portfolio value over time</p>
+					</li>
+					<li><p>v1/{{chain_id}}/tokens/{{ppg_contract_address}}/token_holders/ -Get ERC20 token transfers for address</p>
+					</li>
+					<li><p>v1/{{chain_id}}/tokens/{{ppg_contract_address}}/token_holders_changes/?starting-block={{starting_block}}&amp;ending-block=latest -Get Token Holders as of any block height</p>
+					</li>
+				</ol>
+				<a href="#transactions-endpoints" id="transactions-endpoints" style="color: inherit; text-decoration: none;">
+					<h3>Transactions endpoints</h3>
+				</a>
+				<ol>
+					<li>v1/{{chain_id}}/address/{{wallet_address}}/transactions_v2/ -Get Transactions for address</li>
+					<li>v1/{{chain_id}}/transaction_v2/{{txn_hash}}/                -Get A Transaction</li>
+				</ol>
+				<a href="#base-core-endpoints" id="base-core-endpoints" style="color: inherit; text-decoration: none;">
+					<h3>Base (Core) endpoints</h3>
+				</a>
+				<ol>
+					<li>v1/{{chain_id}}/block_v2/{{block_height}}/            -Get A Block</li>
+					<li>v1/{{chain_id}}/block_v2/{{start_date}}/{{end_date}}/ - Get Block Heights</li>
+					<li>v1/{{chain_id}}/events/address/{{usdc_contract_address}}/?starting-block={{starting_block}}&amp;ending-block={{ending_block}} -Get Log Events by Contract Address</li>
+					<li>v1/{{chain_id}}/events/topics/{{topic_hash}}/?starting-block={{starting_block}}&amp;ending-block={{ending_block}} -Get Log Events by Topic Hash</li>
+					<li>/v1/chains/ -Get all chains</li>
+					<li>/v1/chains/status/ -Get all chain statuses</li>
+				</ol>
+				<a href="#xykdexes" id="xykdexes" style="color: inherit; text-decoration: none;">
+					<h2>xy=k(DEXEs)</h2>
+				</a>
+				<ol>
+					<li>/v1/{{chain_id}}/xy=k/{{dexname}}/pools/ - Get xy=k pools</li>
+					<li>v1/{{chain_id}}/xy=k/{{dexname}}/pools/address/{{usdc_pool_address}}/ -Get xy=k pools by address</li>
+					<li>v1/{{chain_id}}/xy=k/{{dexname}}/address/{{wallet_address}}/balances/ -Get xy=k address exchange balances</li>
+					<li>v1/{{chain_id}}/xy=k/{{dexname}}/tokens/ -Get xy=k network exchange tokens -Get xy=k supported DEXes</li>
+					<li>v1/xy=k/supported_dexes/ -Get xy=k supported DEXes - Get xy=k single network exchange token-Get xy=k transactions for account address</li>
+					<li>v1/{{chain_id}}/xy=k/{{dexname}}/tokens/address/{{usdc_contract_address}}/-Get xy=k transactions for token address</li>
+					<li>v1/{{chain_id}}/xy=k/{{dexname}}/address/{{wallet_address}}/transactions/ -Get xy=k transactions for exchange</li>
+					<li>v1/{{chain_id}}/xy=k/{{dexname}}/tokens/address/{{link_contract_address}}/transactions/ -Get xy=k ecosystem chart data</li>
+					<li>v1/{{chain_id}}/xy=k/{{dexname}}/pools/address/{{usdc_pool_address}}/transactions/ - Get xy=k transactions for exchange</li>
+					<li>v1/{{chain_id}}/xy=k/{{dexname}}/ecosystem/ -</li>
+					<li>v1/{{chain_id}}/xy=k/{{dexname}}/health/ -Get xy=k health data</li>
+				</ol>
+				<a href="#nfts-endpoints" id="nfts-endpoints" style="color: inherit; text-decoration: none;">
+					<h2>NFTs endpoints</h2>
+				</a>
+				<ol>
+					<li>v1/{{chain_id}}/tokens/{{ppg_contract_address}}/nft_token_ids/                   - Get NFT external metadata for contract</li>
+					<li>v1/{{chain_id}}/tokens/{{ppg_contract_address}}/nft_transactions/{{token_id}}/   - Get NFT Transactions for contract</li>
+					<li>v1/{{chain_id}}/tokens/{{ppg_contract_address}}/nft_metadata/{{token_id}}/       - Get NFT external metadata for contract</li>
+				</ol>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="classes/balances.html" class="tsd-kind-icon">Balances</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/base.html" class="tsd-kind-icon">Base</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/dex.html" class="tsd-kind-icon">DEX</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/nfts.html" class="tsd-kind-icon">NFTs</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/transactions.html" class="tsd-kind-icon">Transactions</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/web3covalentsdk.html" class="tsd-kind-icon">Web3<wbr>CovalentSDK</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/addresstransactions.html" class="tsd-kind-icon">Address<wbr>Transactions</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/balance.html" class="tsd-kind-icon">Balance</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/block.html" class="tsd-kind-icon">Block</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/blockheightmetadata.html" class="tsd-kind-icon">Block<wbr>Height<wbr>Metadata</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/blockheightres.html" class="tsd-kind-icon">Block<wbr>Height<wbr>Res</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/blockmetadata.html" class="tsd-kind-icon">Block<wbr>Metadata</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/decoded.html" class="tsd-kind-icon">Decoded</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/erc20tokentransfers.html" class="tsd-kind-icon">ERC20<wbr>Token<wbr>Transfers</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/erc20transfer.html" class="tsd-kind-icon">ERC20<wbr>Transfer</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/healthdata.html" class="tsd-kind-icon">Health<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ibalances.html" class="tsd-kind-icon">IBalances</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ibase.html" class="tsd-kind-icon">IBase</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/idexes.html" class="tsd-kind-icon">IDEXes</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/infts.html" class="tsd-kind-icon">INFTs</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/itransactions.html" class="tsd-kind-icon">ITransactions</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/item.html" class="tsd-kind-icon">Item</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/logeventmetadata.html" class="tsd-kind-icon">Log<wbr>Event<wbr>Metadata</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/logevents.html" class="tsd-kind-icon">Log<wbr>Events</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/logeventsbytopichash.html" class="tsd-kind-icon">Log<wbr>Events<wbr>ByTopic<wbr>Hash</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/logevent.html" class="tsd-kind-icon">Logevent</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/nfttokenids.html" class="tsd-kind-icon">NFTToken<wbr>Ids</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/networkexchangetokens.html" class="tsd-kind-icon">Network<wbr>Exchange<wbr>Tokens</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/pagination.html" class="tsd-kind-icon">Pagination</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/param.html" class="tsd-kind-icon">Param</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/poolmetadata.html" class="tsd-kind-icon">Pool<wbr>Metadata</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/pools.html" class="tsd-kind-icon">Pools</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/portfolio.html" class="tsd-kind-icon">Portfolio</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/supporteddexes.html" class="tsd-kind-icon">Supported<wbr>Dexes</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/token0.html" class="tsd-kind-icon">Token0</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/tokenholders.html" class="tsd-kind-icon">Token<wbr>Holders</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/tokenmetadata.html" class="tsd-kind-icon">Token<wbr>Metadata</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/topiceventmetadata.html" class="tsd-kind-icon">Topic<wbr>Event<wbr>Metadata</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/transactionmetadata.html" class="tsd-kind-icon">Transaction<wbr>Metadata</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#addressbalance" class="tsd-kind-icon">Address<wbr>Balance</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#blockheight" class="tsd-kind-icon">Block<wbr>Height</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#error_code" class="tsd-kind-icon">ERROR_<wbr>CODE</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#err_bad_request" class="tsd-kind-icon">ERR_<wbr>BAD_<wbr>REQUEST</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#err_not_found" class="tsd-kind-icon">ERR_<wbr>NOT_<wbr>FOUND</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#err_too_many_requests" class="tsd-kind-icon">ERR_<wbr>TOO_<wbr>MANY_<wbr>REQUESTS</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#err_unauthorized" class="tsd-kind-icon">ERR_<wbr>UNAUTHORIZED</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#errorresponse" class="tsd-kind-icon">Error<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#methodcall" class="tsd-kind-icon">Method<wbr>Call</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#sdkconfig" class="tsd-kind-icon">SDKConfig</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#server_errors" class="tsd-kind-icon">SERVER_<wbr>ERRORS</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#transaction" class="tsd-kind-icon">Transaction</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#transfer" class="tsd-kind-icon">Transfer</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#get" class="tsd-kind-icon">get</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
