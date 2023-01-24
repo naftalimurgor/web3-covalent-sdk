@@ -4,19 +4,22 @@
 
 # web3-covalent-sdk
 
-A full-fledged sdk for the Covalent Unified API for querying on-chain data across mutliple chains. 
+A full-fledged sdk for the Covalent Unified API for querying on-chain data across mutliple chains.
 
 Check out [Covalent API](https://www.covalenthq.com/platform/#/) for more info.
 
 ## Quick Start
 
 ### Installation
+
 If using npm:
+
 ```sh
 npm i web3-covalent-sdk
 ```
 
 or with Yarn:
+
 ```sh
 yarn add web3-covalent-sdk
 ```
@@ -29,67 +32,103 @@ A unified JavaScript SDK written in TypeScript that can be used in a Reactjs web
 
 [View Pitch Deck](https://www.canva.com/design/DAFXW9uylME/o4EpvuYo8YAALjvrDuSRZg/view?utm_content=DAFXW9uylME&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
 
-
 ## Usage
+
+Create a config object:
+
+```typescript
+const sdKConfig: SDKConfig = {
+    // obtain key from: https://www.covalenthq.com/platform/#/
+    apiKey: process.env.COVALENT_API_KEY as string,
+    apiV1Url: 'https://api.covalenthq.com/v1/',
+}
+```
+
+Create an instance of the Web3CovalentSDK class:
+
+```typescript
+import {Web3CovalentSDK} from 'web3-covalent-sdk'
+
+web3CovalentSDK = new Web3CovalentSDK(sdKConfig)
+```
 
 ### 1. Query NFT data
 
+To query NFT TokenIds:
+
+```typescript
+const contractAddress = '0xBd3531dA5CF5857e7CfAA92426877b022e612cf'
+const ethereumChainId = 1
+
+const nftData = await web3CovalentSDK.nfts.getNFTTokenIDsForContract(ethereumChainId, tokenId, contractAddress)
+console.info(nftData.items)
+```
+
 ### 2. Query Transactions
+
+To fetch a transaction based on the Transaction Hash:
+
+```typescript
+const ethereumChainId = 1
+const txhash = '0x9508e372d64c9dd36befe55ba58d66bbbc67f07ceff05c55b2ad2795bbf13a7a'
+
+const transaction = await web3CovalentSDK.transactions.getTransaction(ethereumChainId, txhash)
+console.info(transaction)
+```
 
 ### 3. Query Block Data
 
+To fetch a block at a certain height:
+
+```typescript
+const chainId = 1
+const blockHeight = 15410959
+const result = await web3CovalentSDK.base.getBlock(chainId, blockHeight)
+
+const block = result.items[0]
+console.info(block)
+```
+
 ### 4. Query xy=k Data
+
+To query xy=k data:
+
+```typescript
+const ethereumChainId = 1
+const dexname = 'uniswap_v2'
+
+const xyPools = (await web3CovalentSDK.dexes.getXYPools(
+    ethereumChainId,
+    dexname,
+))
+
+console.info(xypools.items)
+```
 
 ### 5. Query Balances
 
+To query balance balance of and address:
+
+```typescript
+const ethereumChainId = 1
+const address = '0xDaF81c3603C83f952376F5829a360A5822f5B5Da'
+
+const balances = (await web3CovalentSDK.balances.getAddressBalance(
+      ethereumChainId,
+      TEST_ADDRESS,
+))
+
+console.info(balances.items)
+```
+
 ## Docs
 
-Read more 
+Read more in the [docs](https://naftalimurgor.github.io/web3-covalent-sdk/)
 
 ## Try out in Code Sandbox
 
 [Code Sandbox]()
 
-## Covalent API endpoints used (V1)
+## Changelog
 
-1. Balances endpoint
-
-1. v1/{{chain_id}}/address/{{wallet_address}}/balances_v2/        -Get Token Balances for Address
-2. v1/{{chain_id}}/address/{{wallet_address}}/portfolio_v2/       -Get Historic Portfolio value over time
-3. v1/{{chain_id}}/tokens/{{ppg_contract_address}}/token_holders/ -Get ERC20 token transfers for address
-4. v1/{{chain_id}}/tokens/{{ppg_contract_address}}/token_holders_changes/?starting-block={{starting_block}}&ending-block=latest -Get Token Holders as of any block height
-
-### Transactions endpoints
-
-1. v1/{{chain_id}}/address/{{wallet_address}}/transactions_v2/ -Get Transactions for address
-2. v1/{{chain_id}}/transaction_v2/{{txn_hash}}/                -Get A Transaction
-
-### Base (Core) endpoints
-
-1. v1/{{chain_id}}/block_v2/{{block_height}}/            -Get A Block
-2. v1/{{chain_id}}/block_v2/{{start_date}}/{{end_date}}/ - Get Block Heights
-3. v1/{{chain_id}}/events/address/{{usdc_contract_address}}/?starting-block={{starting_block}}&ending-block={{ending_block}} -Get Log Events by Contract Address
-4. v1/{{chain_id}}/events/topics/{{topic_hash}}/?starting-block={{starting_block}}&ending-block={{ending_block}} -Get Log Events by Topic Hash
-5. /v1/chains/ -Get all chains
-6. /v1/chains/status/ -Get all chain statuses
-
-## xy=k(DEXEs)
-
-1. /v1/{{chain_id}}/xy=k/{{dexname}}/pools/ - Get xy=k pools
-2. v1/{{chain_id}}/xy=k/{{dexname}}/pools/address/{{usdc_pool_address}}/ -Get xy=k pools by address
-3. v1/{{chain_id}}/xy=k/{{dexname}}/address/{{wallet_address}}/balances/ -Get xy=k address exchange balances
-4. v1/{{chain_id}}/xy=k/{{dexname}}/tokens/ -Get xy=k network exchange tokens -Get xy=k supported DEXes
-5. v1/xy=k/supported_dexes/ -Get xy=k supported DEXes - Get xy=k single network exchange token-Get xy=k transactions for account address
-6. v1/{{chain_id}}/xy=k/{{dexname}}/tokens/address/{{usdc_contract_address}}/-Get xy=k transactions for token address
-7. v1/{{chain_id}}/xy=k/{{dexname}}/address/{{wallet_address}}/transactions/ -Get xy=k transactions for exchange
-8. v1/{{chain_id}}/xy=k/{{dexname}}/tokens/address/{{link_contract_address}}/transactions/ -Get xy=k ecosystem chart data
-9. v1/{{chain_id}}/xy=k/{{dexname}}/pools/address/{{usdc_pool_address}}/transactions/ - Get xy=k transactions for exchange
-10. v1/{{chain_id}}/xy=k/{{dexname}}/ecosystem/ -
-11. v1/{{chain_id}}/xy=k/{{dexname}}/health/ -Get xy=k health data
-
-## NFTs endpoints
-
-1. v1/{{chain_id}}/tokens/{{ppg_contract_address}}/nft_token_ids/                   - Get NFT external metadata for contract
-2. v1/{{chain_id}}/tokens/{{ppg_contract_address}}/nft_transactions/{{token_id}}/   - Get NFT Transactions for contract
-3. v1/{{chain_id}}/tokens/{{ppg_contract_address}}/nft_metadata/{{token_id}}/       - Get NFT external metadata for contract
-
+view [api changelogs](CHANGELOG.md)
