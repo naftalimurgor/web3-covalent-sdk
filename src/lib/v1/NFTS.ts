@@ -55,10 +55,9 @@ export class NFTs implements INFTs {
      */
     public getNFTTokenIDsForContract = async (
         chainId: string,
-        tokenId: number,
         contractAddress: string,
     ): Promise<NFTTokenIds | ErrorResponse> => {
-        const url = `${this.API_URL}${chainId}/tokens/${contractAddress}/nft_metadata/${tokenId}/?key=${this.API_KEY}`
+        const url = `${this.API_URL}${chainId}/tokens/${contractAddress}/nft_metadata/?key=${this.API_KEY}`
 
         try {
             const result = await get(url)

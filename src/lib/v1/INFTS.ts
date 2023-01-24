@@ -26,7 +26,6 @@ interface TokenMetadata {
 export interface INFTs {
     getNFTTokenIDsForContract: (
         chainId: string,
-        tokenId: number,
         contractAddress: string,
     ) => Promise<NFTTokenIds | ErrorResponse>
 
