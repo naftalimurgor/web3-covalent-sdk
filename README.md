@@ -49,7 +49,7 @@ Create an instance of the Web3CovalentSDK class:
 ```typescript
 import {Web3CovalentSDK} from 'web3-covalent-sdk'
 
-web3CovalentSDK = new Web3CovalentSDK(sdKConfig)
+const web3CovalentSDK = new Web3CovalentSDK(sdKConfig)
 ```
 
 ### 1. Query NFT data
