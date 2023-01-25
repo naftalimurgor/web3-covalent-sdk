@@ -87,7 +87,7 @@
 				<a href="#usecase-addressed" id="usecase-addressed" style="color: inherit; text-decoration: none;">
 					<h2>Usecase addressed</h2>
 				</a>
-				<p>A unified JavaScript SDK written in TypeScript that can be used in a Reactjs web application (in the Model Layer, taking into account that React applications follow the MVVM pattern) to access the Covalent Unified API as all-in-one library for Frontend projects.</p>
+				<p>A unified JavaScript SDK written in TypeScript that can be used in any Reactjs web application (in the Model Layer, taking into account that React applications follow the MVVM pattern) to access the Covalent Unified API as all-in-one library for Frontend projects.</p>
 				<a href="#pitch-deck" id="pitch-deck" style="color: inherit; text-decoration: none;">
 					<h2>Pitch Deck</h2>
 				</a>
@@ -97,140 +97,95 @@
 				</a>
 				<p>Create a config object:</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> sdKConfig: SDKConfig = {
-    <span class="hljs-comment">// obtain key from: https://www.covalenthq.com/platform/#/</span>
-    <span class="hljs-attr">apiKey</span>: process.env.COVALENT_API_KEY <span class="hljs-keyword">as</span> <span class="hljs-built_in">string</span>,
-    <span class="hljs-attr">apiV1Url</span>: <span class="hljs-string">&#x27;https://api.covalenthq.com/v1/&#x27;</span>,
-}
+  <span class="hljs-comment">// obtain key from: https://www.covalenthq.com/platform/#/</span>
+  <span class="hljs-attr">apiKey</span>: process.env.COVALENT_API_KEY <span class="hljs-keyword">as</span> <span class="hljs-built_in">string</span>,
+  <span class="hljs-attr">apiV1Url</span>: <span class="hljs-string">&#x27;https://api.covalenthq.com/v1/&#x27;</span>,
+};
 </code></pre>
 				<p>Create an instance of the Web3CovalentSDK class:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> {Web3CovalentSDK} <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;web3-covalent-sdk&#x27;</span>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Web3CovalentSDK } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;web3-covalent-sdk&#x27;</span>;
 
-web3CovalentSDK = <span class="hljs-keyword">new</span> Web3CovalentSDK(sdKConfig)
+<span class="hljs-keyword">const</span> web3CovalentSDK = <span class="hljs-keyword">new</span> Web3CovalentSDK(sdKConfig)
 </code></pre>
 				<a href="#1-query-nft-data" id="1-query-nft-data" style="color: inherit; text-decoration: none;">
 					<h3>1. Query NFT data</h3>
 				</a>
 				<p>To query NFT TokenIds:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> contractAddress = <span class="hljs-string">&#x27;0xBd3531dA5CF5857e7CfAA92426877b022e612cf&#x27;</span>
-<span class="hljs-keyword">const</span> ethereumChainId = <span class="hljs-number">1</span>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> contractAddress = <span class="hljs-string">&#x27;0xBd3531dA5CF5857e7CfAA92426877b022e612cf&#x27;</span>;
+<span class="hljs-keyword">const</span> ethereumChainId = <span class="hljs-number">1</span>;
 
-<span class="hljs-keyword">const</span> nftData = <span class="hljs-keyword">await</span> web3CovalentSDK.nfts.getNFTTokenIDsForContract(ethereumChainId, tokenId, contractAddress)
-<span class="hljs-built_in">console</span>.info(nftData.items)
+<span class="hljs-keyword">const</span> nftData = <span class="hljs-keyword">await</span> web3CovalentSDK.nfts.getNFTTokenIDsForContract(
+  ethereumChainId,
+  tokenId,
+  contractAddress
+);
+<span class="hljs-built_in">console</span>.info(nftData.items);
 </code></pre>
 				<a href="#2-query-transactions" id="2-query-transactions" style="color: inherit; text-decoration: none;">
 					<h3>2. Query Transactions</h3>
 				</a>
 				<p>To fetch a transaction based on the Transaction Hash:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> ethereumChainId = <span class="hljs-number">1</span>
-<span class="hljs-keyword">const</span> txhash = <span class="hljs-string">&#x27;0x9508e372d64c9dd36befe55ba58d66bbbc67f07ceff05c55b2ad2795bbf13a7a&#x27;</span>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> ethereumChainId = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">const</span> txhash =
+  <span class="hljs-string">&#x27;0x9508e372d64c9dd36befe55ba58d66bbbc67f07ceff05c55b2ad2795bbf13a7a&#x27;</span>;
 
-<span class="hljs-keyword">const</span> transaction = <span class="hljs-keyword">await</span> web3CovalentSDK.transactions.getTransaction(ethereumChainId, txhash)
-<span class="hljs-built_in">console</span>.info(transaction)
+<span class="hljs-keyword">const</span> transaction = <span class="hljs-keyword">await</span> web3CovalentSDK.transactions.getTransaction(
+  ethereumChainId,
+  txhash
+);
+<span class="hljs-built_in">console</span>.info(transaction);
 </code></pre>
 				<a href="#3-query-block-data" id="3-query-block-data" style="color: inherit; text-decoration: none;">
 					<h3>3. Query Block Data</h3>
 				</a>
 				<p>To fetch a block at a certain height:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> chainId = <span class="hljs-number">1</span>
-<span class="hljs-keyword">const</span> blockHeight = <span class="hljs-number">15410959</span>
-<span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> web3CovalentSDK.base.getBlock(chainId, blockHeight)
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> chainId = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">const</span> blockHeight = <span class="hljs-number">15410959</span>;
+<span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> web3CovalentSDK.base.getBlock(chainId, blockHeight);
 
-<span class="hljs-keyword">const</span> block = result.items[<span class="hljs-number">0</span>]
-<span class="hljs-built_in">console</span>.info(block)
+<span class="hljs-keyword">const</span> block = result.items[<span class="hljs-number">0</span>];
+<span class="hljs-built_in">console</span>.info(block);
 </code></pre>
 				<a href="#4-query-xyk-data" id="4-query-xyk-data" style="color: inherit; text-decoration: none;">
 					<h3>4. Query xy=k Data</h3>
 				</a>
 				<p>To query xy=k data:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> ethereumChainId = <span class="hljs-number">1</span>
-<span class="hljs-keyword">const</span> dexname = <span class="hljs-string">&#x27;uniswap_v2&#x27;</span>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> ethereumChainId = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">const</span> dexname = <span class="hljs-string">&#x27;uniswap_v2&#x27;</span>;
 
-<span class="hljs-keyword">const</span> xyPools = (<span class="hljs-keyword">await</span> web3CovalentSDK.dexes.getXYPools(
-    ethereumChainId,
-    dexname,
-))
+<span class="hljs-keyword">const</span> xyPools = <span class="hljs-keyword">await</span> web3CovalentSDK.dexes.getXYPools(
+  ethereumChainId,
+  dexname
+);
 
-<span class="hljs-built_in">console</span>.info(xypools.items)
+<span class="hljs-built_in">console</span>.info(xypools.items);
 </code></pre>
 				<a href="#5-query-balances" id="5-query-balances" style="color: inherit; text-decoration: none;">
 					<h3>5. Query Balances</h3>
 				</a>
 				<p>To query balance balance of and address:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> ethereumChainId = <span class="hljs-number">1</span>
-<span class="hljs-keyword">const</span> address = <span class="hljs-string">&#x27;0xDaF81c3603C83f952376F5829a360A5822f5B5Da&#x27;</span>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> ethereumChainId = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">const</span> address = <span class="hljs-string">&#x27;0xDaF81c3603C83f952376F5829a360A5822f5B5Da&#x27;</span>;
 
-<span class="hljs-keyword">const</span> balances = (<span class="hljs-keyword">await</span> web3CovalentSDK.balances.getAddressBalance(
-      ethereumChainId,
-      TEST_ADDRESS,
-))
+<span class="hljs-keyword">const</span> balances = <span class="hljs-keyword">await</span> web3CovalentSDK.balances.getAddressBalance(
+  ethereumChainId,
+  TEST_ADDRESS
+);
 
-<span class="hljs-built_in">console</span>.info(balances.items)
+<span class="hljs-built_in">console</span>.info(balances.items);
 </code></pre>
 				<a href="#docs" id="docs" style="color: inherit; text-decoration: none;">
 					<h2>Docs</h2>
 				</a>
-				<p>Read more</p>
+				<p>Read more in the <a href="https://naftalimurgor.github.io/web3-covalent-sdk/">docs</a></p>
 				<a href="#try-out-in-code-sandbox" id="try-out-in-code-sandbox" style="color: inherit; text-decoration: none;">
 					<h2>Try out in Code Sandbox</h2>
 				</a>
-				<p><a href="">Code Sandbox</a></p>
-				<a href="#covalent-api-endpoints-used-v1" id="covalent-api-endpoints-used-v1" style="color: inherit; text-decoration: none;">
-					<h2>Covalent API endpoints used (V1)</h2>
+				<p><a href="https://codesandbox.io/s/rough-tree-e49n2u?file=/src/App.js">Code Sandbox</a></p>
+				<a href="#changelog" id="changelog" style="color: inherit; text-decoration: none;">
+					<h2>Changelog</h2>
 				</a>
-				<ol>
-					<li><p>Balances endpoint</p>
-					</li>
-					<li><p>v1/{{chain_id}}/address/{{wallet_address}}/balances_v2/        -Get Token Balances for Address</p>
-					</li>
-					<li><p>v1/{{chain_id}}/address/{{wallet_address}}/portfolio_v2/       -Get Historic Portfolio value over time</p>
-					</li>
-					<li><p>v1/{{chain_id}}/tokens/{{ppg_contract_address}}/token_holders/ -Get ERC20 token transfers for address</p>
-					</li>
-					<li><p>v1/{{chain_id}}/tokens/{{ppg_contract_address}}/token_holders_changes/?starting-block={{starting_block}}&amp;ending-block=latest -Get Token Holders as of any block height</p>
-					</li>
-				</ol>
-				<a href="#transactions-endpoints" id="transactions-endpoints" style="color: inherit; text-decoration: none;">
-					<h3>Transactions endpoints</h3>
-				</a>
-				<ol>
-					<li>v1/{{chain_id}}/address/{{wallet_address}}/transactions_v2/ -Get Transactions for address</li>
-					<li>v1/{{chain_id}}/transaction_v2/{{txn_hash}}/                -Get A Transaction</li>
-				</ol>
-				<a href="#base-core-endpoints" id="base-core-endpoints" style="color: inherit; text-decoration: none;">
-					<h3>Base (Core) endpoints</h3>
-				</a>
-				<ol>
-					<li>v1/{{chain_id}}/block_v2/{{block_height}}/            -Get A Block</li>
-					<li>v1/{{chain_id}}/block_v2/{{start_date}}/{{end_date}}/ - Get Block Heights</li>
-					<li>v1/{{chain_id}}/events/address/{{usdc_contract_address}}/?starting-block={{starting_block}}&amp;ending-block={{ending_block}} -Get Log Events by Contract Address</li>
-					<li>v1/{{chain_id}}/events/topics/{{topic_hash}}/?starting-block={{starting_block}}&amp;ending-block={{ending_block}} -Get Log Events by Topic Hash</li>
-					<li>/v1/chains/ -Get all chains</li>
-					<li>/v1/chains/status/ -Get all chain statuses</li>
-				</ol>
-				<a href="#xykdexes" id="xykdexes" style="color: inherit; text-decoration: none;">
-					<h2>xy=k(DEXEs)</h2>
-				</a>
-				<ol>
-					<li>/v1/{{chain_id}}/xy=k/{{dexname}}/pools/ - Get xy=k pools</li>
-					<li>v1/{{chain_id}}/xy=k/{{dexname}}/pools/address/{{usdc_pool_address}}/ -Get xy=k pools by address</li>
-					<li>v1/{{chain_id}}/xy=k/{{dexname}}/address/{{wallet_address}}/balances/ -Get xy=k address exchange balances</li>
-					<li>v1/{{chain_id}}/xy=k/{{dexname}}/tokens/ -Get xy=k network exchange tokens -Get xy=k supported DEXes</li>
-					<li>v1/xy=k/supported_dexes/ -Get xy=k supported DEXes - Get xy=k single network exchange token-Get xy=k transactions for account address</li>
-					<li>v1/{{chain_id}}/xy=k/{{dexname}}/tokens/address/{{usdc_contract_address}}/-Get xy=k transactions for token address</li>
-					<li>v1/{{chain_id}}/xy=k/{{dexname}}/address/{{wallet_address}}/transactions/ -Get xy=k transactions for exchange</li>
-					<li>v1/{{chain_id}}/xy=k/{{dexname}}/tokens/address/{{link_contract_address}}/transactions/ -Get xy=k ecosystem chart data</li>
-					<li>v1/{{chain_id}}/xy=k/{{dexname}}/pools/address/{{usdc_pool_address}}/transactions/ - Get xy=k transactions for exchange</li>
-					<li>v1/{{chain_id}}/xy=k/{{dexname}}/ecosystem/ -</li>
-					<li>v1/{{chain_id}}/xy=k/{{dexname}}/health/ -Get xy=k health data</li>
-				</ol>
-				<a href="#nfts-endpoints" id="nfts-endpoints" style="color: inherit; text-decoration: none;">
-					<h2>NFTs endpoints</h2>
-				</a>
-				<ol>
-					<li>v1/{{chain_id}}/tokens/{{ppg_contract_address}}/nft_token_ids/                   - Get NFT external metadata for contract</li>
-					<li>v1/{{chain_id}}/tokens/{{ppg_contract_address}}/nft_transactions/{{token_id}}/   - Get NFT Transactions for contract</li>
-					<li>v1/{{chain_id}}/tokens/{{ppg_contract_address}}/nft_metadata/{{token_id}}/       - Get NFT external metadata for contract</li>
-				</ol>
+				<p>view <a href="CHANGELOG.md">api changelogs</a></p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
