@@ -58,7 +58,7 @@ describe('V1 its', () => {
 
     describe('Balances', () => {
         it('should fetch balance of an address given chainId, and an address', async () => {
-            const result = (await web3CovalentSDK.balances.getAddressBalance(
+            const result = (await web3CovalentSDK.balances.getTokenBalancesForAddress(
                 ETHEREUM_CHAIN_ID,
                 TEST_ADDRESS,
             )) as Balance

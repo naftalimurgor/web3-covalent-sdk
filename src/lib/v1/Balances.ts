@@ -58,7 +58,7 @@ export class Balances implements IBalances {
      * @param {string} address
      * @returns {(Promise<ErrorResponse | Balance>)}
      */
-    public readonly getAddressBalance = async (
+    public readonly getTokenBalancesForAddress = async (
         chainId: number,
         address: string,
     ): Promise<ErrorResponse | Balance> => {

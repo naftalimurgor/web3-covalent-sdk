@@ -185,7 +185,10 @@ export type BlockHeight = {
 }
 
 export interface IBalances {
-    getAddressBalance: (chainId: number, address: string) => Promise<Balance | ErrorResponse>
+    getTokenBalancesForAddress: (
+        chainId: number,
+        address: string,
+    ) => Promise<Balance | ErrorResponse>
 
     getHistoricPortfolioValueOverTime: (
         chainId: number,
