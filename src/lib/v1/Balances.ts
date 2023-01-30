@@ -105,7 +105,7 @@ export class Balances implements IBalances {
      *
      * @public
      * @async
-     * @param {number} chainId hainId of the network
+     * @param {number} chainId  of the network to query
      * @param {string} contractAddress Address of the token contract
      * @param {{ startBlock: number; endingBlock: number }} blockHeight
      * @returns {(Promise<ErrorResponse | TokenHolders>)}
