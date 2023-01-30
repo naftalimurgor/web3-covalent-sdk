@@ -121,12 +121,12 @@ To query balance balance of and address:
 const ethereumChainId = 1;
 const address = '0xDaF81c3603C83f952376F5829a360A5822f5B5Da';
 
-const balances = await web3CovalentSDK.balances.getAddressBalance(
+const tokenBalances = await web3CovalentSDK.balances.getTokenBalancesForAddress(
   ethereumChainId,
   TEST_ADDRESS
 );
 
-console.info(balances.items);
+console.info(tokenBalances.items);
 ```
 
 ## Docs
