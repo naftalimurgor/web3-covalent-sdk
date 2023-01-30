@@ -113,9 +113,9 @@ const xyPools = await web3CovalentSDK.dexes.getXYPools(
 console.info(xypools.items);
 ```
 
-### 5. Query Balances
+### 5. Query Token Balances for an Address
 
-To query balance balance of and address:
+To query token balance balance of and address:
 
 ```typescript
 const ethereumChainId = 1;
