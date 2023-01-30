@@ -167,12 +167,12 @@
 				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> ethereumChainId = <span class="hljs-number">1</span>;
 <span class="hljs-keyword">const</span> address = <span class="hljs-string">&#x27;0xDaF81c3603C83f952376F5829a360A5822f5B5Da&#x27;</span>;
 
-<span class="hljs-keyword">const</span> balances = <span class="hljs-keyword">await</span> web3CovalentSDK.balances.getAddressBalance(
+<span class="hljs-keyword">const</span> tokenBalances = <span class="hljs-keyword">await</span> web3CovalentSDK.balances.getTokenBalancesForAddress(
   ethereumChainId,
   TEST_ADDRESS
 );
 
-<span class="hljs-built_in">console</span>.info(balances.items);
+<span class="hljs-built_in">console</span>.info(tokenBalances.items);
 </code></pre>
 				<a href="#docs" id="docs" style="color: inherit; text-decoration: none;">
 					<h2>Docs</h2>
